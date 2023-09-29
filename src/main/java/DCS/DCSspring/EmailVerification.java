@@ -12,7 +12,7 @@ public class EmailVerification {
     private static final String SMTP_USERNAME = "rbcjfdl132@gmail.com"; // 발신 이메일 주소
     private static final String SMTP_PASSWORD = "soip suux zthr auza"; // 발신 이메일 비밀번호
 
-    public static void sendVerificationEmail(String toEmail, String verificationCode) {
+    public static void sendVerificationEmail(String toEmail, String verificationCode,String toname) {
         // SMTP 서버 설정
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -32,7 +32,7 @@ public class EmailVerification {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(SMTP_USERNAME));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject("이메일 인증 코드");
+            message.setSubject(toname+"님 이메일 인증 코드입니다.");
             message.setText("인증 코드: " + verificationCode);
 
             // 이메일 전송
