@@ -1,4 +1,4 @@
-package DCS.DCSspring;
+package DCS.DCSspring.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
