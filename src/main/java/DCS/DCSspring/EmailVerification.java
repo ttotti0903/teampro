@@ -1,9 +1,11 @@
 package DCS.DCSspring;
 
+import org.springframework.stereotype.Service;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
-
+@Service
 public class EmailVerification {
 
     // 이메일 서버 설정
@@ -14,10 +16,6 @@ public class EmailVerification {
 
     public static void sendVerificationEmail(String toEmail, String verificationCode,String toname) {
 
-        if (!toEmail.endsWith("@mju.ac.kr")) {
-            System.err.println("이메일은 명지대학교 이메일만 사용 가능합니다.");
-            return;
-        }
         // SMTP 서버 설정
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -49,6 +47,8 @@ public class EmailVerification {
         }
         return;
     }
+
+
 
     /*public static void main(String[] args) {
         // 사용자에게 전송할 인증 코드 생성
