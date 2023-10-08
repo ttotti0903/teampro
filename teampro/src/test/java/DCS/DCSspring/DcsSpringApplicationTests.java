@@ -1,0 +1,13 @@
+package DCS.DCSspring;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class DcsSpringApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
