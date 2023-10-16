@@ -1,34 +1,46 @@
 package DCS.DCSspring.Controller;
 
-import DCS.DCSspring.dto.ArticleForm;
-import DCS.DCSspring.entity.Article;
-import DCS.DCSspring.repository.ArticleRepository;
+import DCS.DCSspring.Domain.Article;
+import DCS.DCSspring.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class ArticleController {
+    private final ArticleService articleService;
+
     @Autowired
-    private ArticleRepository articleRepository;
-
-    @GetMapping("/articles/new")
-    public String newArticleForm(){
-        return "articles/new";
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
-    @PostMapping("/articles/create")
-    public String createArticle(ArticleForm form){
-        System.out.println(form.toString());
-        //1. DTO를 엔티티로 변환
-        Article article = form.toEntity();
-        System.out.println(article.toString());
-        //2. 리파지터리로 엔티티를 저장
-        Article saved = articleRepository.save(article);
-        System.out.println(saved.toString());
-        return "articles/create";
+    @GetMapping(value = "/article/list")
+    public String list(Model model) {
+        List<Article> article = articleService.findArticles();
+        model.addAttribute("Article", article);
+        return "articles/list";
     }
-}
+
+    @PostMapping(value = "/create")
+    public String create(@RequestParam String title,@RequestParam String content,Model model){
+
+            Article article = new Article();
+            article.setTitle(title);
+            article.setContent(content);
+
+            articleService.join(article);
+            return "articles/new";
+
+    }
+    @GetMapping(value = "/new")
+        public String showArticlesNew(){
+            return "articles/new";
+        }
+    }
+

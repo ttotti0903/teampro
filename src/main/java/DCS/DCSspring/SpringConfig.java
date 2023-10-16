@@ -1,6 +1,9 @@
 package DCS.DCSspring;
 
+import DCS.DCSspring.Service.ArticleService;
 import DCS.DCSspring.Service.MemberService;
+import DCS.DCSspring.repository.ArticleRepository;
+import DCS.DCSspring.repository.JdbcTemplateArticleRepository;
 import DCS.DCSspring.repository.JdbcTemplateMemberRepository;
 import DCS.DCSspring.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +25,14 @@ public class SpringConfig {
     public MemberRepository memberRepository() {
 
         return new JdbcTemplateMemberRepository(dataSource);
+    }
+    @Bean
+    public ArticleService articleService(){
+        return new ArticleService(articleRepository());
+    }
+
+    @Bean
+    public ArticleRepository articleRepository(){
+        return new JdbcTemplateArticleRepository(dataSource);
     }
 }

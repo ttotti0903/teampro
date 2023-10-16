@@ -1,7 +1,17 @@
 package DCS.DCSspring.repository;
 
-import DCS.DCSspring.entity.Article;
-import org.springframework.data.repository.CrudRepository;
+import DCS.DCSspring.Domain.Article;
 
-public interface ArticleRepository extends CrudRepository<Article, Long> {
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ArticleRepository {
+    Article save(Article article);
+
+    Optional<Article> findById(Long id);
+
+    Optional<Article> findByTitle(String title);
+    Optional<Article> findByContent(String content);
+    List<Article> findAll();
 }

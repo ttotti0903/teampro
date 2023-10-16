@@ -30,7 +30,7 @@ public class MemberController {
     }
     @GetMapping(value = "/input-form")
     public String showInputForm() {
-        return "input-form"; // HTML 폼 페이지 이름
+        return "members/input-form"; // HTML 폼 페이지 이름
     }
     String RandomVeri = "";
     String sub_name;
