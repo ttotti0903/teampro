@@ -3,14 +3,14 @@
 <head>
     <meta charset ="UTP-8">
 </head>
-<form action= "create" method= "post">
+<form action = "create" method = "post">
     <div>
-        <label class="form-label">제목</label>
-        <input type="text" id = "title" name="title">
+        <label for= "title">제목</label>
+        <input type="text" id = "title" name="title" required>
     </div>
     <div>
-        <label class="form-label">내용</label>
-        <input class="form-control" id="content" name="content" rows="3">
+        <label for = "content">내용</label>
+        <input class="form-control" id="content" name="content" rows="3" required>
     </div>
     <button>Submit</button>
 </form>

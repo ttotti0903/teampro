@@ -26,20 +26,20 @@ public class ArticleController {
         model.addAttribute("Article", article);
         return "articles/list";
     }
-
-    @PostMapping(value = "/create")
-    public String create(@RequestParam String title,@RequestParam String content,Model model){
-
+    @PostMapping(value = "create")
+    public String create(@RequestParam String title,@RequestParam String content){
+            System.out.println("매핑됨.");
             Article article = new Article();
             article.setTitle(title);
             article.setContent(content);
 
             articleService.join(article);
-            return "articles/new";
+            return "articles/create";
 
     }
-    @GetMapping(value = "/new")
+    @GetMapping(value = "new")
         public String showArticlesNew(){
+            System.out.println("매핑 됨");
             return "articles/new";
         }
     }
