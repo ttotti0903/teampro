@@ -28,6 +28,8 @@ public class JdbcTemplateArticleRepository implements ArticleRepository{
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", article.getTitle());
         parameters.put("content", article.getContent());
+        parameters.put("deadline_date", article.getDate());
+        parameters.put("deadline_time", article.getTime());
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
         article.setarticleId(key.longValue());
         return article;

@@ -26,9 +26,19 @@
                 </td>
                 <td th:text="${article.get().getContent()}">Default Content</td>
             </tr>
+            <tr>
+                <td>응애</td>
+                <td th:text="${#temporals.format(article.get().getDate(), 'yyyy-MM-dd')}">Default Date</td>
+                <td th:text="${#temporals.format(article.get().getTime(), 'HH:mm')}">Default Time</td>
+                <td>응애</td>
+            </tr>
             </tbody>
         </table>
     </div>
 </div> <!-- /container -->
+    <hr>
+    <a href="/">홈 화면</a>
+    <br>
+    <a href="/articleList">게시물 목록</a>
 </body>
 </html>
