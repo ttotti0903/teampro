@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 목록</title>
+</head>
+<body>
+<form>
+    <label>검색할 게시물의 제목</label>
+    <input type ="text" id = "title" name = "title" required></input>
+</form>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th></thead>
+            <tbody>></th>
+            <th>제목</th>
+            </tr>
+            <tr th:each="article : ${articles}">
+                <td th:text="${article.title}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

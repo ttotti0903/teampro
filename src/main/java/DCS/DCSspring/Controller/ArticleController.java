@@ -20,11 +20,12 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    @GetMapping(value = "/article/list")
+    @GetMapping(value = "/articleList")
     public String list(Model model) {
-        List<Article> article = articleService.findArticles();
-        model.addAttribute("Article", article);
-        return "articles/list";
+        System.out.println("매핑됨");
+        List<Article> articles = articleService.findArticles();
+        model.addAttribute("articles", articles);
+        return "articles/articleList";
     }
     @PostMapping(value = "create")
     public String create(@RequestParam String title,@RequestParam String content){

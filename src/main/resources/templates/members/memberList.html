@@ -6,11 +6,10 @@
         <table>
             <thead>
             <tr>
-                <th>#</th>
+                <th></thead>
+            <tbody>>#</th>
                 <th>이름</th>
             </tr>
-            </thead>
-            <tbody>
             <tr th:each="member : ${members}">
                 <td th:text="${member.id}"></td>
                 <td th:text="${member.name}"></td>
