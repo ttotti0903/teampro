@@ -3,6 +3,7 @@ package DCS.DCSspring.Controller;
 import DCS.DCSspring.Domain.Article;
 import DCS.DCSspring.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +35,13 @@ public class ArticleController {
         return "articles/articleList";
     }
     @PostMapping(value = "create")
-    public String create(@RequestParam String title,@RequestParam String content){
+    public String create(@RequestParam String title, @RequestParam String content, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("time") @DateTimeFormat(pattern = "HH:mm") LocalTime time){
             System.out.println("매핑됨.");
             Article article = new Article();
             article.setTitle(title);
             article.setContent(content);
+            article.setDate(date);
+            article.setTime(time);
 
             articleService.join(article);
             return "articles/create";
