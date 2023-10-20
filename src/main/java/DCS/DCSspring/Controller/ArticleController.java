@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ArticleController {
@@ -43,5 +45,18 @@ public class ArticleController {
             System.out.println("매핑 됨");
             return "articles/new";
         }
+
+    @GetMapping("/articles/{id}")
+    public String show(@PathVariable Long id, Model model){
+        System.out.println("articles/id 매핑됨");
+        //1. id를 조회해 데이터 가져오기
+        Optional<Article> articles = articleService.findArticleById(id);
+        // name이라는 이름으로 value 객체 추가
+        //2. 모델에 데이터 등록하기
+        model.addAttribute("article", articles);
+        //3. 뷰 페이지 반환하기
+        System.out.println("articles/show 반환하기");
+        return "articles/show";
     }
+}
 

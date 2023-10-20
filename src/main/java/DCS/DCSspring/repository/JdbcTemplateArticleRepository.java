@@ -55,6 +55,7 @@ public class JdbcTemplateArticleRepository implements ArticleRepository{
         return jdbcTemplate.query("select * from article", articleRowMapper());
     }
 
+
     private RowMapper<Article> articleRowMapper() {
         return (rs, rowNum) -> {
             Article article = new Article();
