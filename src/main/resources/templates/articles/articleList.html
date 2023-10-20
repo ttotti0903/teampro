@@ -15,12 +15,16 @@
         <table>
             <thead>
             <tr>
-                <th></thead>
-            <tbody>></th>
+                <th>
+                </th></thead>
+            <tbody>>
             <th>제목</th>
             </tr>
             <tr th:each="article : ${articles}">
-                <td th:text="${article.title}"></td>
+                <td>
+                <a th:href="@{/articles/{id}(id=${article.getarticleId()})}" th:text="${article.title}"></a>
+                <!--<td th:text="${article.title}"></td>-->
+                </td>
             </tr>
             </tbody>
         </table>

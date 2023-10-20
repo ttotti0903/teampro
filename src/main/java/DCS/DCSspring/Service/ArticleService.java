@@ -5,6 +5,7 @@ import DCS.DCSspring.Domain.Article;
 import DCS.DCSspring.repository.ArticleRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleService {
     private final ArticleRepository articleRepository;
@@ -26,5 +27,10 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
+    public Optional<Article> findArticleById(Long id) {
+        return articleRepository.findById(id);
+    }
 
 }
+
+

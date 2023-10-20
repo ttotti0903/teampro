@@ -14,4 +14,5 @@ public interface ArticleRepository {
     Optional<Article> findByTitle(String title);
     Optional<Article> findByContent(String content);
     List<Article> findAll();
+
 }
