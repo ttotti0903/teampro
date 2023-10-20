@@ -31,6 +31,10 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
+    public List<Article> findArticleByTitle(String title) {
+        return articleRepository.findByTitle(title);
+    }
+
 }
 
 

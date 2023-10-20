@@ -3,6 +3,7 @@ package DCS.DCSspring.repository;
 import DCS.DCSspring.Domain.Article;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MemoryArticleRepository implements ArticleRepository{
     private static Map<Long, Article> store = new HashMap<>();
@@ -20,16 +21,16 @@ public class MemoryArticleRepository implements ArticleRepository{
     }
 
     @Override
-    public Optional<Article> findByTitle(String Title) {
+    public List<Article> findByTitle(String Title) {
         return store.values().stream()
-                .filter(member -> member.getTitle().equals(Title))
-                .findAny();
+                .filter(article -> article.getTitle().contains(Title))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Article> findByContent(String content) {
         return store.values().stream()
-                .filter(member -> member.getContent().equals(content))
+                .filter(article -> article.getContent().contains(content))
                 .findAny();
     }
 

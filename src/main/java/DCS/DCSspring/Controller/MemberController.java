@@ -36,7 +36,7 @@ public class MemberController {
     String sub_name;
     String sub_email;
     @PostMapping(value = "/submit")
-    public void submitInformation(@RequestParam String name, @RequestParam String email, Model model) {
+    public String submitInformation(@RequestParam String name, @RequestParam String email, Model model) {
 
         // 입력받은 정보를 자바 클래스로 전달 또는 처리
         // 예: Information information = new Information(name, email);
@@ -52,7 +52,7 @@ public class MemberController {
         sendVerificationEmail(email, RandomVeri, name);
         // 모델에 결과를 추가 (선택사항)
         //model.addAttribute("result", "이름: " + name + ", 이메일: " + email);
-
+        return "members/submit";
     }
 
     @PostMapping(value = "/members/new")

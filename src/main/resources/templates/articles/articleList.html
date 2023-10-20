@@ -6,9 +6,9 @@
     <title>게시물 목록</title>
 </head>
 <body>
-<form>
+<form action = "articleSearch" method = "post">
     <label>검색할 게시물의 제목</label>
-    <input type ="text" id = "title" name = "title" required></input>
+    <input type ="text" id = "title" name = "title" required>
 </form>
 <div class="container">
     <div>
@@ -17,7 +17,7 @@
             <tr>
                 <th>
                 </th></thead>
-            <tbody>>
+            <tbody>
             <th>제목</th>
             </tr>
             <tr th:each="article : ${articles}">
