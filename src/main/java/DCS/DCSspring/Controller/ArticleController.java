@@ -62,8 +62,16 @@ public class ArticleController {
         //2. 모델에 데이터 등록하기
         model.addAttribute("article", articles);
         //3. 뷰 페이지 반환하기
-        System.out.println("articles/show 반환하기");
+        System.out.println("articles/show 반환하기 ");
         return "articles/show";
+    }
+
+    @PostMapping(value = "articleSearch")
+    public String articleSearch(@RequestParam String title, Model model){
+        System.out.println("mapping "+title);
+        List<Article> articles = articleService.findArticleByTitle(title);
+        model.addAttribute("articles", articles);
+        return "articles/search";
     }
 }
 

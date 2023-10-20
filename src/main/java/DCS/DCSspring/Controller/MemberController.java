@@ -52,7 +52,8 @@ public class MemberController {
         sendVerificationEmail(email, RandomVeri, name);
         // 모델에 결과를 추가 (선택사항)
         //model.addAttribute("result", "이름: " + name + ", 이메일: " + email);
-        return "/members/submit";
+
+        return "members/submit";
     }
 
     @PostMapping(value = "/members/new")

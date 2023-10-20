@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JdbcTemplateArticleRepository implements ArticleRepository{
 
@@ -41,9 +42,8 @@ public class JdbcTemplateArticleRepository implements ArticleRepository{
     }
 
     @Override
-    public Optional<Article> findByTitle(String title) {
-        List<Article> result = jdbcTemplate.query("select * from article where title = ?", articleRowMapper(), title);
-        return result.stream().findAny();
+    public List<Article> findByTitle(String title) {
+        return jdbcTemplate.query("select * from article where title like ?", articleRowMapper(), "%" + title + "%");
     }
 
     @Override
