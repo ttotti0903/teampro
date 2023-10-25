@@ -19,6 +19,9 @@
                 </th></thead>
             <tbody>
             <th>제목</th>
+            <form action = "deadLine_nearer" method = "post">
+                <button>마감 시간 순</button>
+            </form>
             </tr>
             <tr th:each="article : ${articles}">
                 <td>

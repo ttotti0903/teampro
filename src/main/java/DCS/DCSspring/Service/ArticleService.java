@@ -21,8 +21,6 @@ public class ArticleService {
         return article.getarticleId();
     }
 
-
-
     public List<Article> findArticles(){ //전체 회원 조회.
         return articleRepository.findAll();
     }
@@ -35,6 +33,15 @@ public class ArticleService {
         return articleRepository.findByTitle(title);
     }
 
+    public List<Article> sort_by_deadlineInt() {
+        return articleRepository.sort_by_deadlineInt();
+    }
+
+    public List<Article> deleteArticle(Long id) {
+        articleRepository.deleteArticle(id);
+        return articleRepository.findAll();
+    }
+    
 }
 
 

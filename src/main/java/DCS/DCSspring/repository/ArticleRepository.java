@@ -15,4 +15,7 @@ public interface ArticleRepository {
     Optional<Article> findByContent(String content);
     List<Article> findAll();
 
+    List<Article> sort_by_deadlineInt();
+
+    List<Article> deleteArticle(Long id);
 }

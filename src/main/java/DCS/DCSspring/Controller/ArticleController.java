@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -42,8 +43,10 @@ public class ArticleController {
             article.setContent(content);
             article.setDate(date);
             article.setTime(time);
-
             articleService.join(article);
+            article.setDateTime(LocalDateTime.of(date,time));
+            article.change_deadline_date_to_int();
+            System.out.println(article.getDeadline_int());
             return "articles/create";
 
     }
@@ -72,6 +75,21 @@ public class ArticleController {
         List<Article> articles = articleService.findArticleByTitle(title);
         model.addAttribute("articles", articles);
         return "articles/search";
+    }
+
+    @PostMapping(value = "deadLine_nearer")
+    public String deadLine_nearer(Model model){
+        System.out.println("113");
+        List<Article> articles = articleService.sort_by_deadlineInt();
+        model.addAttribute("articles", articles);
+        return "articles/articleList";
+    }
+
+    @GetMapping("/articles/{id}/delete")
+    public String delete(@PathVariable Long id){
+        System.out.println("delete 매핑됨");
+        articleService.deleteArticle(id);
+        return "redirect:/articleList";
     }
 }
 
