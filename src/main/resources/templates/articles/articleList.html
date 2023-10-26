@@ -1,39 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시물 목록</title>
 </head>
 <body>
-<form action = "articleSearch" method = "post">
+<form action="articleSearch" method="post">
     <label>검색할 게시물의 제목</label>
-    <input type ="text" id = "title" name = "title" required>
+    <input type="text" id="title" name="title" required>
 </form>
 <div class="container">
     <div>
         <table>
             <thead>
             <tr>
-                <th>
-                </th></thead>
+                <th>제목</th>
+                <th>남은 시간</th>
+            </tr>
+            </thead>
             <tbody>
-            <th>제목</th>
-            <form action = "deadLine_nearer" method = "post">
+            <form action="deadLine_nearer" method="post">
                 <button>마감 시간 순</button>
             </form>
-            </tr>
             <tr th:each="article : ${articles}">
                 <td>
-                <a th:href="@{/articles/{id}(id=${article.getarticleId()})}" th:text="${article.title}"></a>
-                <!--<td th:text="${article.title}"></td>-->
+                    <a th:href="@{/articles/{id}(id=${article.getarticleId()})}" th:text="${article.title}"></a>
+                    <span th:text="${article.remainingTime}"></span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div> <!-- /container -->
-    <hr>
-    <a href="/">Go Home</a>
+<hr>
+<a href="/">Go Home</a>
 </body>
 </html>

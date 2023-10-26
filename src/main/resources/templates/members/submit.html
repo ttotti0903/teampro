@@ -3,11 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Submit_Vericode</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        fieldset{
+            margin: auto;
+            margin-top: 30px;
+            width: 350px;
+            height:200px ;
+            border: 1.5px solid rgb(175, 164, 164);
+            border-radius: 10px;
+        }
+        h1{
+            text-align: center;
+            margin-top: 270px;
+        }
+        input{
+            height: 40px;
+            width: 300px;
+            text-align: center;
+        }
+        button{
+            font-weight: bold;
+            font-size : 15px;
+            margin-top: 10px;
+            width: 300px;
+            height: 40px;
+            border: none;
+            background-color: #4098e0;
+            border-radius: 5px;
+            color: white;
+        }
+        form{
+            margin : 40px 22px;
+        }
+    </style>
 </head>
 <body>
-        <form action = "/members/new" method = "post">
-            <input type="text" id="verification" name="verification" required>
-            <button type="submit" value="submit">제출</button>
-        </form>
+<h1>인증 번호 입력</h1>
+<fieldset>
+
+    <form action = "/members/new" method = "post">
+        <input type="text" id="verification" name="verification" placeholder="번호를 입력하시오" required>
+        <button type="submit" value="submit">제출</button>
+    </form>
+</fieldset>
 </body>
 </html>

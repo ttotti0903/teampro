@@ -3,19 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Information Input</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        h1{
+            text-align: center;
+            margin-top: 270px;
+        }
+        fieldset{
+            margin: auto;
+            margin-top: 30px;
+            width: 260px;
+            border: 1.5px solid rgb(175, 164, 164);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        h2{
+            display: none;
+        }
+        label{
+            display: none;
+        }
+        #email , #name{
+            width: 150px;
+            height: 30px;
+            margin-bottom: 3px;
+
+        }
+
+        button{
+            margin-top: 10px;
+            border: none;
+            width:240px;
+            height : 30px;
+            background-color: rgb(64, 152, 224);
+            border-radius: 7px;
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+
+        }
+    </style>
 </head>
 <body>
-<h2>정보 입력</h2>
-<form action = "submit" method = "post">
-    <label for="name">이름:</label>
-    <input type="text" id="name" name="name" required><br>
+<h1>회원 가입</h1>
+<fieldset>
+    <h2>정보 입력</h2>
+    <form action = "/submit" method = "post">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" placeholder="이름" required><br>
 
-    <label for="email">이메일:</label>
-    <input type="text" id="email" name="email" required>
-    <p >@mju.ac.kr</p><br>
+        <label for="email">이메일:</label>
+        <input type="text" id="email" name="email" placeholder="이메일" required>
+        <span>@mju.ac.kr</span><br>
 
-    <button>제출</button>
+        <button type="submit" value="submit">인증 번호 발송</button>
 
-</form>
+    </form>
+</fieldset>
 </body>
 </html>

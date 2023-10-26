@@ -8,15 +8,11 @@ public class Article {
     private Long articleid;
     private String title;
     private String content;
-
     private LocalDate deadline_date;
     private LocalTime deadline_time;
     private int deadline_int;
     private LocalDateTime dateTime;
-
-    public void setDateTime(LocalDateTime dateTime){
-        this.dateTime = dateTime;
-    }
+    private String remainingTime;
     
     public Long getarticleId() {
         return articleid;
@@ -61,6 +57,10 @@ public class Article {
         return deadline_int;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
     public void change_deadline_date_to_int(){
         int year = dateTime.getYear();
         int month = dateTime.getMonthValue();
@@ -69,5 +69,18 @@ public class Article {
         int minute = deadline_time.getMinute();
         this.deadline_int = year*100000000 + month*1000000 + day*10000 + hour*100;
     }
+
+    public void setRemainingTime(String remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public String getRemainingTime(){
+        return remainingTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime){
+        this.dateTime = dateTime;
+    }
+
 }
 

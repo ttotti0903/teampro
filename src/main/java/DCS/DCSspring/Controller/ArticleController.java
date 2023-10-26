@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,12 +33,43 @@ public class ArticleController {
     public String list(Model model) {
         System.out.println("매핑됨");
         List<Article> articles = articleService.findArticles();
+
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        for (Article article : articles) {
+            LocalDateTime articleDateTime = article.getDateTime();
+            Duration duration = Duration.between(currentTime, articleDateTime);
+            if(duration.isNegative()){
+                delete(article.getarticleId());
+            }
+            else{
+                long daysRemaining = duration.toDays();
+                long hoursRemaining = duration.toHours() % 24;
+                long minutesRemaining = duration.toMinutes() % 60;
+                long secondsRemaining = duration.getSeconds() % 60;
+                String remainingTime = daysRemaining + "일 " + hoursRemaining + "시간 " + minutesRemaining + "분 " + secondsRemaining + "초";
+                if(daysRemaining == 0){
+                    remainingTime = hoursRemaining + "시간 " + minutesRemaining + "분 " + secondsRemaining + "초";
+                }
+                if(hoursRemaining == 0 && daysRemaining == 0){
+                    remainingTime = minutesRemaining + "분 " + secondsRemaining + "초";
+                }
+                if(hoursRemaining == 0 && daysRemaining == 0 && minutesRemaining == 0){
+                    remainingTime = secondsRemaining + "초";
+                }
+
+
+                article.setRemainingTime(remainingTime);
+            }
+
+        }
+
         model.addAttribute("articles", articles);
         return "articles/articleList";
     }
     @PostMapping(value = "create")
     public String create(@RequestParam String title, @RequestParam String content, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("time") @DateTimeFormat(pattern = "HH:mm") LocalTime time){
-            System.out.println("매핑됨.");
+            System.out.println("게시물 작성 매핑됨.");
             Article article = new Article();
             article.setTitle(title);
             article.setContent(content);
@@ -47,6 +79,7 @@ public class ArticleController {
             article.setDateTime(LocalDateTime.of(date,time));
             article.change_deadline_date_to_int();
             System.out.println(article.getDeadline_int());
+            System.out.println(article.getDateTime());
             return "articles/create";
 
     }
@@ -91,5 +124,6 @@ public class ArticleController {
         articleService.deleteArticle(id);
         return "redirect:/articleList";
     }
+    
 }
 
