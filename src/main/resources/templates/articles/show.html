@@ -1,43 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
     <title>게시물 목록</title>
-</head>
-<body>
-<form>
-    <label>검색할 게시물의 제목</label>
-    <input type ="text" id = "title" name = "title" required></input>
-</form>
-<div class="container">
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th></thead>
-            <tbody>></th>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      #inform {
+        text-align: center;
+      }
+
+      .container {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px;
+        padding: 20px;
+        min-height: 600px;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input[type="text"] {
+        width: 90%;
+        height: 50%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #4098e0;
+        color: #fff;
+      }
+
+      a {
+        text-decoration: none;
+        color: #4098e0;
+      }
+      .column {
+        display: "flex";
+      }
+      .title {
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <form action="articleSearch" method="post">
+          <label id="inform">검색할 게시물의 제목</label>
+          <input type="text" id="title" name="title" required />
+          <button>검색</button>
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
             <th>제목</th>
-            <a th:href="@{/articles/{id}/delete(id=${article.get().getarticleId()})}" class="btn-primary">Delete</a>
-            </tr>
+            <th>내용</th>
+            <th>종료일자</th>
+            <th>종료시각</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <form action="deadLine_nearer" method="post">
+            <button>마감 시간 순</button>
+          </form>
+          <div class="column">
             <tr th:if="${article.isPresent()}" th:each="article : ${article}">
-                <th th:text="${article.get().getarticleId()}">Default Id</th>
-                <td>
-                    <a th:href="@{'/articles/' + ${article.get().getarticleId()}}" th:text="${article.get().getTitle()}">Default Title</a>
-                </td>
-                <td th:text="${article.get().getContent()}">Default Content</td>
+              <td th:text="${article.get().getarticleId()}" width="50px">
+                Default Id
+              </td>
+              <td>
+                <a
+                  th:href="@{'/articles/' + ${article.get().getarticleId()}}"
+                  th:text="${article.get().getTitle()}"
+                  >Default Title</a
+                >
+              </td>
+              <td th:text="${article.get().getContent()}">Default Content</td>
+              <td
+                th:text="${#temporals.format(article.get().getDate(), 'yyyy-MM-dd')}"
+                width="200px"
+              >
+                Default Date
+              </td>
+              <td
+                th:text="${#temporals.format(article.get().getTime(), 'HH:mm')}"
+                width="80px"
+              >
+                Default Time
+              </td>
+              <td width="80px">
+                <a
+                  th:href="@{/articles/{id}/delete(id=${article.get().getarticleId()})}"
+                  class="btn-primary"
+                  ><button>Delete</button></a
+                >
+              </td>
             </tr>
-            <tr>
-                <td th:text="${#temporals.format(article.get().getDate(), 'yyyy-MM-dd')}">Default Date</td>
-                <td th:text="${#temporals.format(article.get().getTime(), 'HH:mm')}">Default Time</td>
-            </tr>
-            </tbody>
-        </table>
+          </div>
+        </tbody>
+      </table>
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
-</div> <!-- /container -->
-    <hr>
-    <a href="/">홈 화면</a>
-    <br>
-    <a href="/articleList">게시물 목록</a>
-</body>
+    <!-- /container -->
+    <hr />
+    <a href="/" class="footer">홈 화면</a>
+    <br />
+    <a href="/articleList" class="footer">게시물 목록</a>
+  </body>
 </html>

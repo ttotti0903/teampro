@@ -1,22 +1,75 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<div class="container">
-    <div>
+  <head>
+    <title>멤버 목록</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        margin: auto;
+        width: 50%;
+        margin-top: 100px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        min-height: 500px;
+      }
+      h1 {
+        text-align: center;
+        color: #4098e0;
+        margin-bottom: 20px;
+      }
+      table {
+        border: 2px solid #4098e0;
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #000;
+      }
+      th {
+        background-color: #4098e0;
+        color: #fff;
+        border: 2px solid #4098e0;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #000;
+      }
+      td {
+        border: 2px solid #4098e0;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h1>회원 목록</h1>
         <table>
-            <thead>
+          <thead>
             <tr>
-                <th></thead>
-            <tbody>>#</th>
-                <th>이름</th>
+              <th>#</th>
+              <th>이름</th>
             </tr>
+          </thead>
+          <tbody>
             <tr th:each="member : ${members}">
-                <td th:text="${member.id}"></td>
-                <td th:text="${member.name}"></td>
+              <td th:text="${member.id}"></td>
+              <td th:text="${member.name}"></td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
+      </div>
     </div>
-</div> <!-- /container -->
-</body>
+    <!-- /container -->
+  </body>
 </html>

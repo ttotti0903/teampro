@@ -1,53 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit_Vericode</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vericode 제출</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-        *{
-            box-sizing: border-box;
-        }
-        fieldset{
-            margin: auto;
-            margin-top: 30px;
-            width: 350px;
-            height:200px ;
-            border: 1.5px solid rgb(175, 164, 164);
-            border-radius: 10px;
-        }
-        h1{
-            text-align: center;
-            margin-top: 270px;
-        }
-        input{
-            height: 40px;
-            width: 300px;
-            text-align: center;
-        }
-        button{
-            font-weight: bold;
-            font-size : 15px;
-            margin-top: 10px;
-            width: 300px;
-            height: 40px;
-            border: none;
-            background-color: #4098e0;
-            border-radius: 5px;
-            color: white;
-        }
-        form{
-            margin : 40px 22px;
-        }
-    </style>
-</head>
-<body>
-<h1>인증 번호 입력</h1>
-<fieldset>
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-    <form action = "/members/new" method = "post">
-        <input type="text" id="verification" name="verification" placeholder="번호를 입력하시오" required>
-        <button type="submit" value="submit">제출</button>
-    </form>
-</fieldset>
-</body>
+      .modal-content {
+        background-color: #4098e0;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        color: white;
+        width: 400px;
+        padding: 50px;
+        border-radius: 10px;
+      }
+
+      .modal-content h1 {
+        background-color: #4098e0;
+        padding: 20px;
+      }
+
+      .modal-content label {
+        display: block;
+        margin: 10px 0;
+        font-size: 18px;
+      }
+
+      .modal-content input {
+        padding: 10px;
+        width: 100%;
+        border: none;
+        background-color: white;
+        color: #4098e0;
+        border-radius: 5px;
+      }
+
+      .modal-content button {
+        background-color: #fff;
+        color: #4098e0;
+        padding: 10px 20px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 모달을 자동으로 열도록 수정 -->
+    <div id="modalContainer" class="modal-overlay">
+      <div class="modal-content">
+        <h1>Vericode 제출</h1>
+        <form action="/members/new" method="post">
+          <label for="verification">검증 코드</label>
+          <input type="text" id="verification" name="verification" required />
+          <br />
+          <button type="submit">제출</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

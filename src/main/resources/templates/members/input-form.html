@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Information Input</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>정보 입력</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-        *{
-            box-sizing: border-box;
-        }
-        h1{
-            text-align: center;
-            margin-top: 270px;
-        }
-        fieldset{
-            margin: auto;
-            margin-top: 30px;
-            width: 260px;
-            border: 1.5px solid rgb(175, 164, 164);
-            border-radius: 10px;
-            padding: 20px;
-        }
-        h2{
-            display: none;
-        }
-        label{
-            display: none;
-        }
-        #email , #name{
-            width: 150px;
-            height: 30px;
-            margin-bottom: 3px;
-
-        }
-
-        button{
-            margin-top: 10px;
-            border: none;
-            width:240px;
-            height : 30px;
-            background-color: rgb(64, 152, 224);
-            border-radius: 7px;
-            color: white;
-            font-weight: bold;
-            font-size: 17px;
-
-        }
+      body {
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 200px;
+      }
+      h2 {
+        color: #4098e0;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+      }
+      label {
+        color: #4098e0;
+      }
+      input[type="text"] {
+        width: 300px;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
-<h1>회원 가입</h1>
-<fieldset>
+  </head>
+  <body>
     <h2>정보 입력</h2>
-    <form action = "/submit" method = "post">
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" placeholder="이름" required><br>
+    <div>
+      <form action="submit" method="post">
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required /><br />
 
-        <label for="email">이메일:</label>
-        <input type="text" id="email" name="email" placeholder="이메일" required>
-        <span>@mju.ac.kr</span><br>
+        <label for="email">메일</label>
+        <input type="text" id="email" name="email" required />
+        <p>@mju.ac.kr</p>
+        <br />
 
-        <button type="submit" value="submit">인증 번호 발송</button>
-
-    </form>
-</fieldset>
-</body>
+        <button>제출</button>
+      </form>
+    </div>
+  </body>
 </html>
