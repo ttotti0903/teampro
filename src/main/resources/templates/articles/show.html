@@ -144,6 +144,15 @@
                 >
               </td>
             </tr>
+            <tr>
+
+            </tr>
+            <tr th:each="comment : ${article.get().getComments()}">
+              <td>
+                <p th:text="${comment.content}">
+                </p>
+              </td>
+            </tr>
           </div>
         </tbody>
       </table>
@@ -151,6 +160,15 @@
         <thead></thead>
         <tbody></tbody>
       </table>
+      <form action="/add_comment" method="post">
+        <label for="content">댓글</label>
+        <input type="text" id="content" name="content" required>
+
+        <!-- 게시물 번호를 hidden으로 전달 -->
+        <input type="hidden" id="articleId" name="articleId" th:value="${article.get().getarticleId()}">
+
+        <button type="submit">입력</button>
+      </form>
     </div>
     <!-- /container -->
     <hr />

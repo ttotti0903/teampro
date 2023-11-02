@@ -1,7 +1,9 @@
 package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Article;
+import DCS.DCSspring.Domain.Comment;
 import DCS.DCSspring.Service.ArticleService;
+import DCS.DCSspring.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -11,22 +13,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
-
+    private final CommentService commentService;
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, CommentService commentService) {
         this.articleService = articleService;
+        this.commentService = commentService;
     }
 
     @GetMapping(value = "/articleList")
@@ -122,6 +123,23 @@ public class ArticleController {
     public String delete(@PathVariable Long id){
         System.out.println("delete 매핑됨");
         articleService.deleteArticle(id);
+        return "redirect:/articleList";
+    }
+
+    @PostMapping("/add_comment")
+    public String addComment(@RequestParam("content") String content, @RequestParam("articleId") Long articleId){
+        System.out.println("댓글 작성 매핑됨.");
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setArticleid(articleId);
+        commentService.join(comment);
+
+        Optional<Article> article = articleService.findArticleById(articleId);
+        article.get().addComment(comment);
+
+        System.out.println("댓글 내용: " + content);
+        System.out.println("게시물 번호: " + articleId);
+
         return "redirect:/articleList";
     }
     
