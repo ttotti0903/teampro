@@ -97,7 +97,21 @@ public class MemberController {
             return "redirect:/";
         }
         else{
-            return "redirect:/login";
+            return "members/login";
         }
     }
+    @GetMapping(value = "temp")
+    public String makeTemp(){
+        Member member = new Member();
+        int Num = 0;
+        String tmpE = "test" + (String.valueOf(Num++));
+        member.setEmail(tmpE);
+        member.setPassword("1");
+        member.setGrade(2);
+        member.setName("더미");
+        member.setMajor(1);
+        memberService.join(member);
+        return "/home";
+    }
+
 }

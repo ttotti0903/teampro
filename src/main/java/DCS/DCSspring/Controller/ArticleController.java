@@ -15,23 +15,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
+    private final MemberService memberService;
 
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, MemberService memberService) {
         this.articleService = articleService;
+        this.memberService = memberService;
     }
+
 
     @GetMapping(value = "/articleList")
     public String list(Model model) {
@@ -73,8 +74,10 @@ public class ArticleController {
     @PostMapping(value = "create")
     public String create(@RequestParam String title, @RequestParam String content, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("time") @DateTimeFormat(pattern = "HH:mm") LocalTime time,HttpServletRequest request){
         HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute("user");
+        Long temp = (Long) session.getAttribute("id");
+        Member member = memberService.findOne(temp);
         System.out.println("게시물 작성 매핑됨.");
+        System.out.println(member.getName());
         Article article = new Article();
         article.setTitle(title);
         article.setContent(content);

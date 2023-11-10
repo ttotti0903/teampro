@@ -86,5 +86,9 @@ public class Article {
     public void setAuthor(Member member) {
         author = member;
     }
+
+    public Member getAuthor(){
+        return author;
+    }
 }
 
