@@ -20,6 +20,10 @@ public class MemberService {
         return member.getId();
     }
 
+    public Long getMemberId(Member member){
+        return member.getId();
+    }
+
     private void validDuplicateMember(Member member) {
         Optional<Member> result = memberRepository.findByEmail(member.getEmail());
         result.ifPresent(m ->{
@@ -35,5 +39,11 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
 
+    public Optional<Member> findOne(String email){
+        return memberRepository.findByEmail((email));
+    }
 
+    public Member findOneMember(String email){
+        return memberRepository.findByEmail(email).get();
+    }
 }

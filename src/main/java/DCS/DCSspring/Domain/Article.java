@@ -13,7 +13,8 @@ public class Article {
     private int deadline_int;
     private LocalDateTime dateTime;
     private String remainingTime;
-    
+    private Member author;
+
     public Long getarticleId() {
         return articleid;
     }
@@ -82,5 +83,8 @@ public class Article {
         this.dateTime = dateTime;
     }
 
+    public void setAuthor(Member member) {
+        author = member;
+    }
 }
 
