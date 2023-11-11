@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>로그인</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 200px;
+        }
+        h2 {
+            color: #4098e0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        label {
+            color: #4098e0;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #4098e0;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h2>정보 입력</h2>
+<div>
+    <form action="login" method="post">
+        <label for="email">메일</label>
+        <input type="text" id="email" name="email" required />
+
+        <label for="password">비밀 번호</label>
+        <input type="text" id="password" name="password" required />
+        <br />
+
+        <button>제출</button>
+    </form>
+</div>
+</body>
+</html>

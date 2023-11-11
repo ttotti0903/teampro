@@ -2,6 +2,8 @@ package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Member;
 import DCS.DCSspring.Service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import static DCS.DCSspring.EmailVerification.sendVerificationEmail;
@@ -35,8 +38,11 @@ public class MemberController {
     String RandomVeri = "";
     String sub_name;
     String sub_email;
+    int sub_major;
+    String sub_password;
+    int sub_grade;
     @PostMapping(value = "/submit")
-    public String submitInformation(@RequestParam String name, @RequestParam String email, Model model) {
+    public String submitInformation(@RequestParam String name, @RequestParam String email, @RequestParam String password,@RequestParam int major,@RequestParam int grade,Model model) {
 
         // 입력받은 정보를 자바 클래스로 전달 또는 처리
         // 예: Information information = new Information(name, email);
@@ -44,7 +50,10 @@ public class MemberController {
         sub_email = email;
         sub_name = name;
         RandomVeri = "";
-
+        sub_grade = grade;
+        //sub_major = major;
+        sub_password = password;
+        sub_major = major;
         for(int i = 0; i < 6; i++){
             Random random = new Random();
             RandomVeri = RandomVeri + random.nextInt(9);
@@ -62,7 +71,10 @@ public class MemberController {
             Member member = new Member();
             member.setName(sub_name);
             member.setEmail(sub_email);
-
+            //member.setMajor(sub_major);
+            member.setGrade(sub_grade);
+            member.setPassword(sub_password);
+            member.setMajor(sub_major);
             memberService.join(member);
             return "redirect:/";
 
@@ -71,6 +83,35 @@ public class MemberController {
         return "/submit";
 
     }
-
+    @GetMapping(value = "login")
+    public String showLogin(){
+        return "members/login";
+    }
+    @PostMapping(value = "login")
+    public String loginPost(@RequestParam String email,@RequestParam String password,HttpServletRequest request){
+        Member member = memberService.findOneMember(email);
+        memberService.getMemberId(member);
+        if(member.getPassword().equals(password)){
+            HttpSession session = request.getSession();
+            session.setAttribute("id", memberService.getMemberId(member));
+            return "redirect:/";
+        }
+        else{
+            return "members/login";
+        }
+    }
+    @GetMapping(value = "temp")
+    public String makeTemp(){
+        Member member = new Member();
+        int Num = 0;
+        String tmpE = "test" + (String.valueOf(Num++));
+        member.setEmail(tmpE);
+        member.setPassword("1");
+        member.setGrade(2);
+        member.setName("더미");
+        member.setMajor(1);
+        memberService.join(member);
+        return "/home";
+    }
 
 }

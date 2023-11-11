@@ -1,9 +1,11 @@
 package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Article;
-import DCS.DCSspring.Domain.Comment;
+import DCS.DCSspring.Domain.Member;
 import DCS.DCSspring.Service.ArticleService;
-import DCS.DCSspring.Service.CommentService;
+import DCS.DCSspring.Service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,14 @@ import java.util.Optional;
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
-    private final CommentService commentService;
+    private final MemberService memberService;
+
     @Autowired
-    public ArticleController(ArticleService articleService, CommentService commentService) {
+    public ArticleController(ArticleService articleService, MemberService memberService) {
         this.articleService = articleService;
-        this.commentService = commentService;
+        this.memberService = memberService;
     }
+
 
     @GetMapping(value = "/articleList")
     public String list(Model model) {
@@ -59,7 +63,6 @@ public class ArticleController {
                     remainingTime = secondsRemaining + "초";
                 }
 
-
                 article.setRemainingTime(remainingTime);
             }
 
@@ -69,26 +72,39 @@ public class ArticleController {
         return "articles/articleList";
     }
     @PostMapping(value = "create")
-    public String create(@RequestParam String title, @RequestParam String content, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("time") @DateTimeFormat(pattern = "HH:mm") LocalTime time){
-            System.out.println("게시물 작성 매핑됨.");
-            Article article = new Article();
-            article.setTitle(title);
-            article.setContent(content);
-            article.setDate(date);
-            article.setTime(time);
-            articleService.join(article);
-            article.setDateTime(LocalDateTime.of(date,time));
-            article.change_deadline_date_to_int();
-            System.out.println(article.getDeadline_int());
-            System.out.println(article.getDateTime());
-            return "articles/create";
+    public String create(@RequestParam String title, @RequestParam String content, @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("time") @DateTimeFormat(pattern = "HH:mm") LocalTime time,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long temp = (Long) session.getAttribute("id");
+        Member member = memberService.findOne(temp);
+        System.out.println("게시물 작성 매핑됨.");
+        System.out.println(member.getName());
+        Article article = new Article();
+        article.setTitle(title);
+        article.setContent(content);
+        article.setDate(date);
+        article.setTime(time);
+        article.setAuthor(member);
+        article.setDateTime(LocalDateTime.of(date,time));
+        article.change_deadline_date_to_int();
+        articleService.join(article);
+        System.out.println(article.getDeadline_int());
+        System.out.println(article.getDateTime());
+        return "articles/create";
 
     }
-    @GetMapping(value = "new")
-        public String showArticlesNew(){
-            System.out.println("매핑 됨");
+    @GetMapping(value = "/new")
+    public String createArticle(HttpServletRequest request){
+        System.out.println("로그인 후 게시물 생성 매핑 됨.");
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("id");
+        if(id != null){
             return "articles/new";
         }
+        else{
+            return "redirect:/login";
+        }
+    }
+
 
     @GetMapping("/articles/{id}")
     public String show(@PathVariable Long id, Model model){
@@ -120,28 +136,10 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{id}/delete")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) {
         System.out.println("delete 매핑됨");
         articleService.deleteArticle(id);
         return "redirect:/articleList";
     }
-
-    @PostMapping("/add_comment")
-    public String addComment(@RequestParam("content") String content, @RequestParam("articleId") Long articleId){
-        System.out.println("댓글 작성 매핑됨.");
-        Comment comment = new Comment();
-        comment.setContent(content);
-        comment.setArticleid(articleId);
-        commentService.join(comment);
-
-        Optional<Article> article = articleService.findArticleById(articleId);
-        article.get().addComment(comment);
-
-        System.out.println("댓글 내용: " + content);
-        System.out.println("게시물 번호: " + articleId);
-
-        return "redirect:/articleList";
-    }
-    
 }
 

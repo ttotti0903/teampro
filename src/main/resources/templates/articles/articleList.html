@@ -79,7 +79,7 @@
         color: #4098e0;
       }
       .column {
-        display: "flex";
+        display: flex;
       }
       .title {
         align-items: center;
@@ -101,6 +101,7 @@
           <tr>
             <th>제목</th>
             <th>남은 시간</th>
+            <th>작성자</th>
           </tr>
         </thead>
         <tbody>
@@ -113,9 +114,13 @@
                 th:href="@{/articles/{id}(id=${article.getarticleId()})}"
                 th:text="${article.title}"
               ></a>
+
             </td>
             <td>
               <span th:text="${article.remainingTime}"></span>
+            </td>
+            <td>
+              <span th:text="${article.getAuthor().getName()}"></span>
             </td>
           </tr>
         </tbody>
