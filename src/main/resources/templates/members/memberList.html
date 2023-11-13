@@ -69,7 +69,21 @@
               <td th:text="${member.grade}"></td>
             </tr>
           </tbody>
+
         </table>
+        <p>명예의전당 등수 테스트</p>
+        <table>
+          <tbody>
+          <tr th:each="rating : ${ratings}">
+            <td th:text="${rating.member.name}"></td>
+            <td th:text="${rating.member_id}"></td>
+            <td th:text="${rating.score_avg}"></td>
+            <td th:text="${rating.score_num}"></td>
+          </tr>
+          </tbody>
+        </table>
+
+
       </div>
     </div>
     <!-- /container -->

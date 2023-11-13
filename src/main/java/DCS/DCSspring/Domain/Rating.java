@@ -1,16 +1,22 @@
 package DCS.DCSspring.Domain;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Rating {
+    private Member member;
+
+
+
     private Long member_id;
     private int[] score;
     private double score_avg;
     private int study_num;
     private int score_num;
     private boolean met;
-
+    public Member getMember() {
+        return member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
+    }
     public Rating(){
         score = new int[5];
         for(int i = 0; i < 5; i++){
@@ -71,14 +77,18 @@ public class Rating {
         this.met = met;
     }
 
-    public void addScore(int n){
-        if(n < 1 || n > 5)
-            return ;
-
-        if(score_num > 9 && study_num > 3)
-            met = true;
-
+    public void addScore(int n) {
+        if (n < 1 || n > 5)
+            return;
         score[n-1]++;
+        score_num++;
+
+        if (score_num >= 10 && study_num >= 3){
+            met = true;
+            calAvg();
+        }
+
+
 
     }
 
@@ -88,10 +98,31 @@ public class Rating {
 
     public void calAvg(){
         int temp = 0;
-        for(int i = 0; i > 5; i++)
+        int left_outside = score_num/10;
+        int right_outside = left_outside;
+
+        for(int i = 0; i < 5; i++)
             temp += score[i] * (i + 1);
 
+        for(int i = 0; left_outside > 0; i++) {
+            if (score[i] >= left_outside) {
+                temp -= (i + 1) * left_outside;
+                left_outside = 0;
+            } else {
+                temp -= (i + 1) * score[i];
+                left_outside -= score[i];
+            }
+        }
 
-        score_avg = temp / (double)score_num;
+        for(int i = 4; right_outside > 0; i--){
+            if(score[i] >= right_outside){
+                temp -= (i+1) * right_outside;
+                right_outside = 0;
+            } else {
+                temp -= (i+1)*score[i];
+                right_outside -= score[i];
+            }
+        }
+        score_avg = temp / (double)score_num - left_outside*2;
     }
 }

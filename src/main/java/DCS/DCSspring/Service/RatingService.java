@@ -8,10 +8,8 @@ import java.util.List;
 
 public class RatingService {
     private final RatingRepository ratingRepository;
-    private final MemberRepository memberRepository;
-    public RatingService(RatingRepository ratingRepository, MemberRepository memberRepository) {
+    public RatingService(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
-        this.memberRepository = memberRepository;
     }
 
     public Long join(Rating rating){

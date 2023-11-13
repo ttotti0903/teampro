@@ -1,8 +1,10 @@
 package DCS.DCSspring;
 
+import DCS.DCSspring.Domain.Rating;
 import DCS.DCSspring.Service.ArticleService;
 import DCS.DCSspring.Service.CommentService;
 import DCS.DCSspring.Service.MemberService;
+import DCS.DCSspring.Service.RatingService;
 import DCS.DCSspring.repository.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,5 +38,13 @@ public class SpringConfig {
     @Bean
     public CommentService commentService(){
         return new CommentService(commentRepository());
+    }
+    @Bean
+    public RatingRepository ratingRepository(){
+        return new MemoryRatingRepository();
+    }
+    @Bean
+    public RatingService ratingService(){
+        return new RatingService(ratingRepository());
     }
 }
