@@ -83,11 +83,33 @@
       }
       .title {
         align-items: center;
+        margin-top: 30px;
+      }
+      .login-button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: -30px;
+      }
+      .login-button:hover {
+        background-color: #0056b3;
+      }
+      nav {
+        display: block;
+        float: right;
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <nav>
+        <div class="login">
+          <button class="login-button">로그인</button>
+        </div>
+      </nav>
       <div class="title">
         <form action="articleSearch" method="post">
           <label id="inform">검색할 게시물의 제목</label>
@@ -114,7 +136,6 @@
                 th:href="@{/articles/{id}(id=${article.getarticleId()})}"
                 th:text="${article.title}"
               ></a>
-
             </td>
             <td>
               <span th:text="${article.remainingTime}"></span>

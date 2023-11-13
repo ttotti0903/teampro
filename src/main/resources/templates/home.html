@@ -72,11 +72,36 @@
             margin-top: 100px;
           }
         }
+        .title {
+          align-items: center;
+          margin-top: 30px;
+        }
+        .login-button {
+          background-color: #4098e0;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          margin-right: 10px;
+          margin-bottom: -30px;
+        }
+        .login-button:hover {
+          background-color: #0056b3;
+        }
+        nav {
+          display: block;
+          float: right;
+        }
       </style>
     </head>
 
     <body>
       <div id="wrap">
+        <nav>
+          <div class="login">
+            <button class="login-button">로그인</button>
+          </div>
+        </nav>
         <div id="container">
           <a href="/"><img src="img/logo.png" width="80%" /></a>
           <h3>회원 기능</h3>
@@ -105,24 +130,16 @@
             >
               게시글 목록
             </button>
-            <button
-                    id="login"
-                    type="button"
-                    onclick="location.href='/login'"
-            >
+            <button id="login" type="button" onclick="location.href='/login'">
               로그인
             </button>
-            <button
-                    id="temp"
-                    type="button"
-                    onclick="location.href='/temp'"
-            >
+            <button id="temp" type="button" onclick="location.href='/temp'">
               더미회원
             </button>
             <button
-                    id="chatlist"
-                    type="button"
-                    onclick="location.href='/chatlist'"
+              id="chatlist"
+              type="button"
+              onclick="location.href='/chatlist'"
             >
               채팅방
             </button>
