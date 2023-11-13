@@ -1,7 +1,9 @@
 package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Member;
+import DCS.DCSspring.Domain.Rating;
 import DCS.DCSspring.Service.MemberService;
+import DCS.DCSspring.Service.RatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import static DCS.DCSspring.EmailVerification.sendVerificationEmail;
@@ -20,15 +21,19 @@ import static DCS.DCSspring.EmailVerification.sendVerificationEmail;
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final RatingService ratingService;
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, RatingService ratingService) {
         this.memberService = memberService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping(value = "/members")
     public String list(Model model) {
         List<Member> members = memberService.findMembers();
+        List<Rating> ratings = ratingService.findRatings();
         model.addAttribute("members", members);
+        model.addAttribute("ratings", ratings);
         return "members/memberList";
     }
     @GetMapping(value = "/input-form")

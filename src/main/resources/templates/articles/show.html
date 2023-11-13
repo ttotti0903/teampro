@@ -149,6 +149,9 @@
             </tr>
             <tr th:each="comment : ${article.get().getComments()}">
               <td>
+                <p th:text="${comment.getAuther()}">
+
+                </p>
                 <p th:text="${comment.content}">
                 </p>
               </td>

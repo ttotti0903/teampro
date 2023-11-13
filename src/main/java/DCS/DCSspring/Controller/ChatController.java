@@ -14,7 +14,9 @@ import java.util.List;
 public class ChatController {
     private final ChatService chatService;
 
-
+    public ChatController(){
+        chatService = new ChatService();
+    }
     @RequestMapping("/chatlist")
     public String chatList(Model model){
         List<ChatRoom> roomList = chatService.findAllRoom();
