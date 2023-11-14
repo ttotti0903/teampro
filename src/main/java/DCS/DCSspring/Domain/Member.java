@@ -6,6 +6,14 @@ public class Member {
     private String name;
     private int major; //1 = 컴공, 2 = 기공, 3 = 화공 등등...
     private String password;
+    private Rating rating;
+    public Member(){
+        rating = new Rating();
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
 
     public int getGrade() {
         return grade;
@@ -55,5 +63,9 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 }

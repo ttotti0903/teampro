@@ -1,8 +1,10 @@
 package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Article;
+import DCS.DCSspring.Domain.Comment;
 import DCS.DCSspring.Domain.Member;
 import DCS.DCSspring.Service.ArticleService;
+import DCS.DCSspring.Service.CommentService;
 import DCS.DCSspring.Service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,11 +28,12 @@ import java.util.Optional;
 public class ArticleController {
     private final ArticleService articleService;
     private final MemberService memberService;
-
+    private final CommentService commentService;
     @Autowired
-    public ArticleController(ArticleService articleService, MemberService memberService) {
+    public ArticleController(ArticleService articleService, MemberService memberService, CommentService commentService) {
         this.articleService = articleService;
         this.memberService = memberService;
+        this.commentService = commentService;
     }
 
 
@@ -107,7 +110,9 @@ public class ArticleController {
 
 
     @GetMapping("/articles/{id}")
-    public String show(@PathVariable Long id, Model model){
+    public String show(@PathVariable Long id, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long temp = (Long) session.getAttribute("id");
         System.out.println("articles/id 매핑됨");
         //1. id를 조회해 데이터 가져오기
         Optional<Article> articles = articleService.findArticleById(id);
@@ -139,6 +144,28 @@ public class ArticleController {
     public String delete(@PathVariable Long id) {
         System.out.println("delete 매핑됨");
         articleService.deleteArticle(id);
+        return "redirect:/articleList";
+    }
+
+    @PostMapping("/add_comment")
+    public String addComment(@RequestParam("content") String content, @RequestParam("articleId") Long articleId, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long temp = (Long) session.getAttribute("id");
+        String name = memberService.findOne(temp).getName();
+        System.out.println("댓글 작성 매핑됨.");
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.setArticleid(articleId);
+        comment.setAuther(name);
+        commentService.join(comment);
+
+        Optional<Article> article = articleService.findArticleById(articleId);
+        article.get().addComment(comment);
+
+        System.out.println("댓글 작성자: " + comment.getAuther());
+        System.out.println("댓글 내용: " + content);
+        System.out.println("게시물 번호: " + articleId);
+
         return "redirect:/articleList";
     }
 }

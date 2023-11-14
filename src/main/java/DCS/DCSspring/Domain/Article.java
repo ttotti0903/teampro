@@ -3,6 +3,8 @@ package DCS.DCSspring.Domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Article {
     private Long articleid;
@@ -14,7 +16,17 @@ public class Article {
     private LocalDateTime dateTime;
     private String remainingTime;
     private Member author;
+    private List<Comment> comments;
 
+    public Article(){
+        comments = new ArrayList<Comment>();
+    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+    public void addComment(Comment comment){
+        comments.add(comment);
+    }
     public Long getarticleId() {
         return articleid;
     }

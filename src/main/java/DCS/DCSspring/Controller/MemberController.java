@@ -1,7 +1,9 @@
 package DCS.DCSspring.Controller;
 
 import DCS.DCSspring.Domain.Member;
+import DCS.DCSspring.Domain.Rating;
 import DCS.DCSspring.Service.MemberService;
+import DCS.DCSspring.Service.RatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import static DCS.DCSspring.EmailVerification.sendVerificationEmail;
@@ -20,15 +21,20 @@ import static DCS.DCSspring.EmailVerification.sendVerificationEmail;
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final RatingService ratingService;
+
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, RatingService ratingService) {
         this.memberService = memberService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping(value = "/members")
     public String list(Model model) {
         List<Member> members = memberService.findMembers();
+        List<Rating> ratings = ratingService.findRatings();
         model.addAttribute("members", members);
+        model.addAttribute("ratings", ratings);
         return "members/memberList";
     }
     @GetMapping(value = "/input-form")
@@ -102,6 +108,27 @@ public class MemberController {
     }
     @GetMapping(value = "temp")
     public String makeTemp(){
+        System.out.println("더미만들기");
+        Random ran = new Random();
+        for(int i = 0; i < 10; i++){
+            Member member = new Member();
+            String tmpE = "test" + (String.valueOf(i));
+            member.setName(tmpE);
+            member.setEmail(tmpE);
+            member.setPassword(String.valueOf(i));
+            member.setGrade(2);
+            Rating rating = new Rating();
+            rating.setStudy_num(3);
+            for(int j = 0; j < 10; j++)
+                rating.addScore(ran.nextInt(5)+1);
+            ratingService.join(rating);
+            memberService.join(member);
+            rating.setMember_id(member.getId());
+            rating.setMember(member);
+        }
+
+        return  "/home";
+        /*
         Member member = new Member();
         int Num = 0;
         String tmpE = "test" + (String.valueOf(Num++));
@@ -111,7 +138,7 @@ public class MemberController {
         member.setName("더미");
         member.setMajor(1);
         memberService.join(member);
-        return "/home";
+        return "/home";*/
     }
 
 }
