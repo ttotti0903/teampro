@@ -23,4 +23,9 @@ public class MemoryCommentRepository implements CommentRepository {
                 .filter(comment -> comment.getArticleid().compareTo(id) == 0)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<Comment> findById(Long id) {
+        return Optional.empty();
+    }
 }

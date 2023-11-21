@@ -76,7 +76,7 @@
           <tbody>
           <tr th:each="rating : ${ratings}">
             <td th:text="${rating.member.name}"></td>
-            <td th:text="${rating.member_id}"></td>
+            <td th:text="${rating.member.id}"></td>
             <td th:text="${rating.score_avg}"></td>
             <td th:text="${rating.score_num}"></td>
           </tr>

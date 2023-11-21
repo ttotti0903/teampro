@@ -3,9 +3,11 @@ package DCS.DCSspring.Controller;
 import DCS.DCSspring.Domain.Article;
 import DCS.DCSspring.Domain.Comment;
 import DCS.DCSspring.Domain.Member;
+import DCS.DCSspring.Domain.Reply;
 import DCS.DCSspring.Service.ArticleService;
 import DCS.DCSspring.Service.CommentService;
 import DCS.DCSspring.Service.MemberService;
+import DCS.DCSspring.Service.ReplyService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,13 @@ public class ArticleController {
     private final ArticleService articleService;
     private final MemberService memberService;
     private final CommentService commentService;
+    private final ReplyService replyService;
     @Autowired
-    public ArticleController(ArticleService articleService, MemberService memberService, CommentService commentService) {
+    public ArticleController(ArticleService articleService, MemberService memberService, CommentService commentService, ReplyService replyService) {
         this.articleService = articleService;
         this.memberService = memberService;
         this.commentService = commentService;
+        this.replyService = replyService;
     }
 
 
@@ -148,7 +152,7 @@ public class ArticleController {
     }
 
     @PostMapping("/add_comment")
-    public String addComment(@RequestParam("content") String content, @RequestParam("articleId") Long articleId, HttpServletRequest request){
+    public String addComment(@RequestParam("content") String content, @RequestParam("articleId") Long articleId, Model model,HttpServletRequest request){
         HttpSession session = request.getSession();
         Long temp = (Long) session.getAttribute("id");
         String name = memberService.findOne(temp).getName();
@@ -166,7 +170,34 @@ public class ArticleController {
         System.out.println("댓글 내용: " + content);
         System.out.println("게시물 번호: " + articleId);
 
-        return "redirect:/articleList";
+        model.addAttribute("article", article);
+        System.out.println("articles/show 반환하기 ");
+        return "articles/show";
+    }
+
+    @PostMapping("/add_reply")
+    public String addReply(@RequestParam("content") String content, @RequestParam("commentId") Long commentId, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long temp = (Long) session.getAttribute("id");
+        String name = commentService.findOne(temp).getAuther();
+        System.out.println("대댓글 작성 매핑됨.");
+        Reply reply = new Reply();
+        reply.setContent(content);
+        reply.setCommentid(commentId);
+        reply.setAuther(memberService.findOne(temp));
+        replyService.join(reply);
+
+        Comment comment = commentService.findOne(commentId);
+        comment.addReply(reply);
+
+        System.out.println("대댓글 작성자: " + reply.getAuther().getName());
+        System.out.println("대댓글 내용: " + content);
+        System.out.println("댓글 아이디: " + commentId);
+
+        Optional<Article> article = articleService.findArticleById(commentId);
+        model.addAttribute("article", article);
+        System.out.println("articles/show 반환하기 ");
+        return "articles/show";
     }
 }
 

@@ -38,8 +38,7 @@ public class MemberController {
         return "members/memberList";
     }
     @GetMapping(value = "/input-form")
-    public String showInputForm() {
-        return "members/input-form"; // HTML 폼 페이지 이름
+    public String showInputForm() {return "members/input-form"; // HTML 폼 페이지 이름
     }
     String RandomVeri = "";
     String sub_name;
@@ -82,6 +81,9 @@ public class MemberController {
             member.setPassword(sub_password);
             member.setMajor(sub_major);
             memberService.join(member);
+            Rating rating = new Rating();
+            rating.setMember(member);
+            member.setRating(rating);
             return "redirect:/";
 
         }
@@ -122,9 +124,11 @@ public class MemberController {
             for(int j = 0; j < 10; j++)
                 rating.addScore(ran.nextInt(5)+1);
             ratingService.join(rating);
+            System.out.println("1");
             memberService.join(member);
-            rating.setMember_id(member.getId());
+            System.out.println("2");
             rating.setMember(member);
+            System.out.println("3");
         }
 
         return  "/home";

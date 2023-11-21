@@ -17,7 +17,7 @@ public class MemoryRatingRepository implements RatingRepository{
     @Override
     public Optional<Rating> findById(Long id){
         for(Rating target: store){
-            if(target.getMember_id().equals(id))
+            if(target.getMember().getId().equals(id))
                 return Optional.of(target);
         }
         return null;

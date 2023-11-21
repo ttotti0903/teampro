@@ -2,10 +2,6 @@ package DCS.DCSspring.Domain;
 
 public class Rating {
     private Member member;
-
-
-
-    private Long member_id;
     private int[] score;
     private double score_avg;
     private int study_num;
@@ -23,14 +19,9 @@ public class Rating {
             score[i] = 0;
         }
         score_avg = 0;
-        member_id = 0L;
         study_num = 0;
         score_num = 0;
         met = false;
-    }
-
-    public Long getMember_id() {
-        return member_id;
     }
 
     public int[] getScore() {
@@ -47,10 +38,6 @@ public class Rating {
 
     public int getScore_num() {
         return score_num;
-    }
-
-    public void setMember_id(Long member_id) {
-        this.member_id = member_id;
     }
 
     public void setScore_list(int[] score) {

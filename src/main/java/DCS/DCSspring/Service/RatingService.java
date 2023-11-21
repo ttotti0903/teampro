@@ -12,13 +12,13 @@ public class RatingService {
         this.ratingRepository = ratingRepository;
     }
 
-    public Long join(Rating rating){
+    public void join(Rating rating){
         ratingRepository.save(rating);
-        return rating.getMember_id();
+        //return rating.getMember().getId();
     }
 
     public Long getMemberId(Rating rating){
-        return rating.getMember_id();
+        return rating.getMember().getId();
     }
 
     public List<Rating> findRatings(){ //전체 회원 조회.

@@ -50,4 +50,8 @@ public class Comment {
     public void setReply(ArrayList<Reply> reply) {
         this.replyList = reply;
     }
+
+    public void addReply(Reply reply) {
+        replyList.add(reply);
+    }
 }
