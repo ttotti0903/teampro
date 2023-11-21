@@ -7,6 +7,7 @@ public class Member {
     private int major; //1 = 컴공, 2 = 기공, 3 = 화공 등등...
     private String password;
     private Rating rating;
+
     public Member(){
         rating = new Rating();
     }

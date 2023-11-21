@@ -10,7 +10,12 @@
     public class ChatRoom {
         private String roomId;
         private String name;
+        public int userNum = 0;
+        public int maxUser;
+        private Long userId[];
         private Set<WebSocketSession> sessions = new HashSet<>();
+
+
         @Builder
         public ChatRoom(String roomId, String name) {
             this.roomId = roomId;
