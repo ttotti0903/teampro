@@ -38,7 +38,14 @@
         console.log(e.data);
         let msgArea = document.querySelector('.msgArea');
         let newMsg = document.createElement('div');
-        newMsg.innerText=e.data;
+
+        // Convert the message string back to a ChatMessage object
+        let chatMessage = JSON.parse(e.data);
+
+        // Extract 'sender' and 'msg' from the ChatMessage object
+        let formattedMessage = chatMessage.sender + " : " + chatMessage.msg;
+
+        newMsg.innerText = formattedMessage;
         msgArea.append(newMsg);
     }
 
@@ -46,6 +53,7 @@
     //메세지 보내기 버튼 눌렀을 떄..
     function sendMsg() {
         let content=document.querySelector('.content').value;
+        console.log(content);
         var talkMsg={"type" : "TALK","roomId":[[${room.roomId}]] ,"sender":"chee","msg":content};
         socket.send(JSON.stringify(talkMsg));
     }

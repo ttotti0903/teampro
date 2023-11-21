@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.28'
     implementation 'org.testng:testng:7.1.0'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+	implementation 'org.json:json:20210307'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.sun.mail:javax.mail:1.6.2'
