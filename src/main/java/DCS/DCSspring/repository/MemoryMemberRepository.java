@@ -39,7 +39,14 @@ public class MemoryMemberRepository implements MemberRepository{
 
     }
 
-    
+    @Override
+    public List<Member> findByIds(List<Long> ids){
+        List<Member> members = new ArrayList<>();
+        for(Long id : ids){
+            members.add(store.get(id));
+        }
+        return members;
+    }
 
     public void clearStore(){
         store.clear();

@@ -1,10 +1,10 @@
 package DCS.DCSspring.Service;
 
 import DCS.DCSspring.Domain.Rating;
-import DCS.DCSspring.repository.MemberRepository;
 import DCS.DCSspring.repository.RatingRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RatingService {
     private final RatingRepository ratingRepository;
@@ -27,5 +27,9 @@ public class RatingService {
     public void addScore(Long memberId ,int n){
         Rating rating = ratingRepository.findById(memberId).orElse(null);
         rating.addScore(n);
+    }
+
+    public Optional<Rating> findbyMemberId(Long memberId){
+        return ratingRepository.findById(memberId);
     }
 }

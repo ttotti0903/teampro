@@ -1,0 +1,21 @@
+<!-- chat/estimate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>평점 매기기</title>
+</head>
+<body>
+<h1>채팅방 평점 매기기</h1>
+<!-- 여기에서 평점을 매기는 폼을 구현하고, 필요한 정보를 사용하여 서버로 전송 -->
+<form action="estimateComplite" method = "post">
+    <div th:each="member : ${members}">
+        <label th:text="${member.name}"></label>
+        <input type="number" min="0" max="5" step="1" th:name="${'score_' + member.id}" required>
+    </div>
+    <button>Submit</button>
+</form>
+</body>
+</html>

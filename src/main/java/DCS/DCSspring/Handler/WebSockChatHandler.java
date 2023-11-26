@@ -39,7 +39,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
     }*/
 
     @Override
-protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     String payload = message.getPayload();
     logId = (Long) session.getAttributes().get("logId");
     Member member = memberService.findOne(logId);

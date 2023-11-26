@@ -58,11 +58,22 @@
         socket.send(JSON.stringify(talkMsg));
     }
 
-    function quit(){
-        let quitMsg={"type" : "QUIT","roomId":[[${room.roomId}]] ,"sender":"chee","msg":""};
-        socket.send(JSON.stringify(quitMsg));
-        socket.close();
-        location.href="/chatlist";
+    function quit() {
+    let roomId = "${room.roomId}";
+    let quitMsg = {"type" : "QUIT", "roomId": [[${room.roomId}]], "sender": "chee", "msg": ""};
+    socket.send(JSON.stringify(quitMsg));
+    fetch('/quit', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(quitMsg),
+    redirect: 'follow',  // 리다이렉트 응답을 따름
+})
+.then(() => {
+    socket.close();
+    location.href = "/chat/temp";
+});
     }
 
 </script>

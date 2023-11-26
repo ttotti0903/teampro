@@ -8,6 +8,16 @@ public class Member {
     private String password;
     private Rating rating;
 
+    public String getChatRoomId() {
+        return chatRoomId;
+    }
+
+    public void setChatRoomId(String chatRoomId) {
+        this.chatRoomId = chatRoomId;
+    }
+
+    private String chatRoomId = null;
+
     public Member(){
         rating = new Rating();
     }

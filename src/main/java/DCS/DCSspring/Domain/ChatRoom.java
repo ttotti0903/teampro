@@ -12,7 +12,7 @@
         private String name;
         public int userNum = 0;
         public int maxUser;
-        private Long userId[];
+        public Long userId[];
         private Set<WebSocketSession> sessions = new HashSet<>();
 
 

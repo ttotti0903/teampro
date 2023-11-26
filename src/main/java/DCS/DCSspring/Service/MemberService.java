@@ -46,4 +46,8 @@ public class MemberService {
     public Member findOneMember(String email){
         return memberRepository.findByEmail(email).get();
     }
+
+    public List<Member> findMembersByIds(List<Long> ids) {
+        return memberRepository.findByIds(ids);
+    }
 }

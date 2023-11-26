@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,6 +29,40 @@ public class ChatService {
 
     public ChatRoom findRoomById(String roomId) {
         return chatRooms.get(roomId);
+    }
+
+    public void quitMember(Long memberId, ChatRoom room) {
+        // Id를 찾아서 제거
+        for (int i = 0; i < room.userNum; i++) {
+            if (room.userId[i] != null && room.userId[i].equals(memberId)) {
+                room.userId[i] = null;
+                break; // Id를 찾으면 루프 종료
+            }
+        }
+        for(int i = 0; i < room.maxUser; i++){
+            if(room.userId[i] == null){
+                System.out.println("0");
+            }
+            else{
+                System.out.println(room.userId[i]);
+            }
+        }
+        // 배열 정리 (null을 제외하고 앞으로 이동)
+        Arrays.sort(room.userId, Comparator.nullsLast(Comparator.naturalOrder()));
+        for(int i = 0; i < room.maxUser; i++){
+            if(room.userId[i] == null){
+                System.out.println("0");
+            }
+            else{
+                System.out.println(room.userId[i]);
+            }
+        }
+    }
+
+    public List<Long> findRoomMemberIds(ChatRoom room) {
+        return Arrays.stream(room.userId)
+                     .filter(Objects::nonNull)
+                     .collect(Collectors.toList());
     }
 
     public ChatRoom createRoom(String name) {
