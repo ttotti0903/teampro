@@ -140,24 +140,25 @@ public class ClubController {
         return "redirect:/showclub";
     }
     @PostMapping(value="/accept")
-    public String Accept(@ModelAttribute("member") Member member, @RequestParam Long clubid, HttpServletRequest request){
+    public String Accept(@RequestParam("memberid") Long memberId, @RequestParam("clubid") Long clubId, HttpServletRequest request){
         System.out.println("accept 매핑");
-        System.out.println(member.toString());
         HttpSession session = request.getSession();
         Long temp = (Long) session.getAttribute("id");
 
-        Optional<Club> club = clubService.findClubById(clubid);
+        Member member = memberService.findOne(memberId);
+        Optional<Club> club = clubService.findClubById(clubId);
         club.get().Confirm(member);
         return "club/showclub";
     }
     @PostMapping(value = "/reject")
-    public String Reject(@ModelAttribute("member") Member member, @RequestParam Long clubid, HttpServletRequest request){
+    public String Reject(@RequestParam("memberid") Long memberId, @RequestParam("clubid") Long clubId, HttpServletRequest request){
         HttpSession session = request.getSession();
         Long temp = (Long) session.getAttribute("id");
 
-        Optional<Club> club = clubService.findClubById(clubid);
-        club.get().deleteApplicant(member);
+        Optional<Club> club = clubService.findClubById(clubId);
+        Member member = memberService.findOne(memberId);
 
+        club.get().deleteApplicant(member);
         return"club/showclub";
     }
 }
