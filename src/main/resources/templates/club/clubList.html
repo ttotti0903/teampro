@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>게시물 목록</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #inform {
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            padding: 20px;
+            min-height: 600px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            height: 50%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #4098e0;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4098e0;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4098e0;
+        }
+        .column {
+            display: flex;
+        }
+        .title {
+            align-items: center;
+            margin-top: 30px;
+        }
+        .login-button {
+            background-color: #4098e0;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: -30px;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+        nav {
+            display: block;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <div class="login">
+            <button class="login-button">로그인</button>
+        </div>
+    </nav>
+    <div class="title">
+        <form action="clubSearch" method="post">
+            <label id="inform">검색할 동아리 공고의 제목</label>
+            <input type="text" id="title" name="title" required />
+            <button>검색</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>남은 시간</th>
+            <th>작성자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form action="club_deadLine_nearer" method="post">
+            <button>마감 시간 순</button>
+        </form>
+        <tr th:each="club : ${clubs}">
+            <td>
+                <a
+                        th:href="@{/club/{id}(id=${club.getClubid()})}"
+                        th:text="${club.title}"
+                ></a>
+            </td>
+            <td>
+                <span th:text="${club.remainingTime}"></span>
+            </td>
+            <td>
+                <span th:text="${club.getAuthor().getName()}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /container -->
+<hr />
+<a href="/" class="footer">홈 화면</a>
+<br />
+<a href="/clubList" class="footer">동아리 모집 공고 목록</a>
+</body>
+</html>

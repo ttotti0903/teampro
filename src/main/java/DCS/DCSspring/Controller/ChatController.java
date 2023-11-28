@@ -131,6 +131,7 @@ public class ChatController {
                 Member member = memberService.findOne(memberId);
                 Rating rating = ratingService.findbyMemberId(memberId).get();
                 rating.addScore(score);
+                ratingService.sort();
             }
         }
 

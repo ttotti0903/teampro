@@ -32,4 +32,7 @@ public class RatingService {
     public Optional<Rating> findbyMemberId(Long memberId){
         return ratingRepository.findById(memberId);
     }
+    public void sort() {
+        ratingRepository.sort_by_score();
+    }
 }

@@ -162,10 +162,6 @@ public class ArticleController {
         Optional<Article> article = articleService.findArticleById(articleId);
         article.get().addComment(comment);
 
-        System.out.println("댓글 작성자: " + comment.getAuther());
-        System.out.println("댓글 내용: " + content);
-        System.out.println("게시물 번호: " + articleId);
-
         return "redirect:/articleList";
     }
 }
