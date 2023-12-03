@@ -99,7 +99,13 @@
       <div id="wrap">
         <nav>
           <div class="login">
-            <button class="login-button">로그인</button>
+            <button
+              class="login-button"
+              type="button"
+              onclick="location.href='/login'"
+            >
+              로그인
+            </button>
           </div>
         </nav>
         <div id="container">
@@ -130,9 +136,6 @@
             >
               게시글 목록
             </button>
-            <button id="login" type="button" onclick="location.href='/login'">
-              로그인
-            </button>
             <button id="temp" type="button" onclick="location.href='/temp'">
               더미회원
             </button>
@@ -151,9 +154,9 @@
               동아리 모집
             </button>
             <button
-                    id="write_club"
-                    type="button"
-                    onclick="location.href='/newClub'"
+              id="write_club"
+              type="button"
+              onclick="location.href='/newClub'"
             >
               동아리 모집 공고 작성
             </button>

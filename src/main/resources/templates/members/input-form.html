@@ -7,6 +7,10 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <script
+      src="https://kit.fontawesome.com/c92de062b3.js"
+      crossorigin="anonymous"
+    ></script>
     <style>
       body {
         background-color: #fff;
@@ -16,17 +20,31 @@
       }
       h2 {
         color: #4098e0;
+        margin-top:-70px;
       }
       .container {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        margin: 20px;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 20px auto;
+        margin-right: 20px auto;
+        border: none;
+        padding: 30px; /* Add this line */
+        max-width : 500px;
+      }
       }
       label {
         color: #4098e0;
       }
       input[type="text"] {
+        width: 300px;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      input[type="password"] {
         width: 300px;
         padding: 10px;
         margin: 5px 0;
@@ -41,33 +59,209 @@
         padding: 10px 20px;
         cursor: pointer;
         margin-top: 10px;
+        width:300px;
+        transition: background-color 0.3s ease;
       }
       button:hover {
         background-color: #0056b3;
       }
+      .name{
+        display: flex;
+        align-items: center;
+        width: 300px; /* 필요한 너비에 맞게 조정 */
+        margin-bottom:10px;
+        border-radius: 3px;
+      }
+      .email {
+        display: flex;
+        align-items: center;
+        width: 300px; /* 필요한 너비에 맞게 조정 */
+        border: 1px solid #ccc; /* 테두리를 추가하거나 스타일링을 원하는 대로 변경 */
+        padding: 6px; /* 필요한 여백에 맞게 조정 */
+        border-radius: 3px;
+        margin-top:40px;
+        margin-bottom:10px;
+      }
+      .email input,
+      .email select {
+
+        border: none; /* 입력 요소의 테두리 제거 */
+        margin: 0; /* 기본 마진 제거 */
+        padding: 4px; /* 필요한 패딩 설정 */
+        outline: none; /* 포커스 효과 제거 (선택 사항) */
+      }
+      .email select {
+        background-color: transparent; /* 셀렉트 박스의 배경 제거 */
+      }
+      .selectmg{
+        display: flex;
+        justify-content: space-between;
+        margin-left: 15px;
+        margin-right:40px;
+        margin-bottom:30px;
+      }
+      #password{
+        border-radius: 3px;
+        border:1px solid lightgray;
+        margin-top:5px;
+        margin-bottom:10px;
+        width:300px;
+        height:45px;
+      }
+      #confirmPassword{
+        margin-top:5px;
+        margin-bottom:30px;
+        width:300px;
+        height:45px;
+        border-radius: 3px;
+        border:1px solid lightgray;
+      }
     </style>
   </head>
   <body>
-    <h2>정보 입력</h2>
-    <div>
+    <h2>회원가입</h2>
+    <div class="container">
       <form action="submit" method="post">
-        <label for="name">이름</label>
-        <input type="text" id="name" name="name" required /><br />
-
-        <label for="email">메일</label>
-        <input type="text" id="email" name="email" required />
-        <p>@mju.ac.kr</p>
-        <label for="password">비밀 번호</label>
-        <input type="text" id="password" name="password" required />
-        <label for = "major" method = "post">전공</label>
-        <input type = "text" id = "major" name = "major" required />
-        <label for = "grade" method = "post">학년</label>
-        <input type = "text" id = "grade" name = "grade" required />
-        <br />
-        
-
-        <button>제출</button>
+        <div class="name">
+          <label for="name"></label>
+          <input
+            placeholder="이름"
+            type="text"
+            id="name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="email">
+          <label for="email"></label>
+          <input
+            placeholder="메일"
+            type="text"
+            id="email"
+            name="email"
+            required
+          />
+          <select name="email_domain" id="email_domain">
+            <option value="">@mju.ac.kr</option>
+          </select>
+        </div>
+        <div>
+          <label for="password"></label>
+          <div class="password-input">
+            <input
+              placeholder=" 비밀번호"
+              type="password"
+              id="password"
+              name="password"
+              required
+            />
+            <span class="eyes" onclick="togglePasswordVisibility()">
+              <i class="fa-regular fa-eye"></i>
+            </span>
+          </div>
+        </div>
+        <div>
+          <label for="confirmPassword"></label>
+          <div class="password-input">
+            <input
+              placeholder=" 비밀번호 확인"
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+            <span class="eyes" onclick="toggleConfirmPasswordVisibility()">
+              <i class="fa-regular fa-eye"></i>
+            </span>
+          </div>
+        </div>
+        <div class="selectmg">
+          <span>
+            <label for="major" method="post">전공</label>
+            <!--<input
+              placeholder="전공"
+              type="text"
+              id="major"
+              name="major"
+              required
+            />-->
+            <select type="text" name="major" id="major">
+              <option value="1">기계공학과</option>
+              <option value="2">전자공학과</option>
+              <option value="3">컴퓨터공학과</option>
+              <option value="4">화학공학과</option>
+            </select>
+          </span>
+          <span>
+            <label for="grade" method="post">학년</label>
+            <!--<input
+              placeholder="학년"
+              type="text"
+              id="grade"
+              name="grade"
+              required
+            />-->
+            <select type="text" name="grade" id="grade" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </span>
+        </div>
+        <div>
+          <button>제출</button>
+        </div>
       </form>
     </div>
+    <script>
+      var password = document.getElementById("password"),
+        confirm_password = document.getElementById("confirmPassword");
+
+      function validatePassword() {
+        if (password.value != confirmPassword.value) {
+          // 만일 두 인풋 필드값이 같지 않을 경우
+          // setCustomValidity의 값을 지정해 무조건 경고 표시가 나게 하고
+          confirm_password.setCustomValidity("비밀번호가 일치하지 않습니다.");
+        } else {
+          // 만일 두 인풋 필드값이 같을 경우
+          // 오류가 없으면 메시지를 빈 문자열로 설정해야한다. 오류 메시지가 비어 있지 않은 한 양식은 유효성 검사를 통과하지 않고 제출되지 않는다.
+          // 따라서 빈값을 주어 submit 처리되게 한다
+          confirm_password.setCustomValidity("");
+        }
+      }
+
+      password.onchange = validatePassword;
+      confirm_password.onkeyup = validatePassword;
+
+      function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var toggleButton = document.getElementById("togglePassword");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleButton.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+        } else {
+          passwordInput.type = "password";
+          toggleButton.innerHTML = '<i class="fa-regular fa-eye"></i>';
+        }
+      }
+
+      function toggleConfirmPasswordVisibility() {
+        var confirmPasswordInput = document.getElementById("confirmPassword");
+        var confirmToggleButton = document.getElementById(
+          "toggleConfirmPassword"
+        );
+
+        if (confirmPasswordInput.type === "password") {
+          confirmPasswordInput.type = "text";
+          confirmToggleButton.innerHTML =
+            '<i class="fa-regular fa-eye-slash"></i>';
+        } else {
+          confirmPasswordInput.type = "password";
+          confirmToggleButton.innerHTML = '<i class="fa-regular fa-eye"></i>';
+        }
+      }
+    </script>
   </body>
 </html>

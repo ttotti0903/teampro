@@ -23,9 +23,11 @@
         padding: 20px;
         min-height: 500px;
       }
-      h1 {
+      h1,
+      h2 {
         text-align: center;
         color: #4098e0;
+        margin-top: 20px;
         margin-bottom: 20px;
       }
       table {
@@ -57,8 +59,10 @@
         <table>
           <thead>
             <tr>
-              <th>#</th>
               <th>이름</th>
+              <th>이메일</th>
+              <th>전공</th>
+              <th>학년</th>
             </tr>
           </thead>
           <tbody>
@@ -69,21 +73,26 @@
               <td th:text="${member.grade}"></td>
             </tr>
           </tbody>
-
         </table>
-        <p>명예의전당 등수 테스트</p>
+        <h2>명예의전당 등수 테스트</h2>
         <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>아이디</th>
+              <th>평균평점</th>
+              <th>평가개수</th>
+            </tr>
+          </thead>
           <tbody>
-          <tr th:each="rating : ${ratings}">
-            <td th:text="${rating.member.name}"></td>
-            <td th:text="${rating.member_id}"></td>
-            <td th:text="${rating.score_avg}"></td>
-            <td th:text="${rating.score_num}"></td>
-          </tr>
+            <tr th:each="rating : ${ratings}">
+              <td th:text="${rating.member.name}"></td>
+              <td th:text="${rating.member_id}"></td>
+              <td th:text="${rating.score_avg}"></td>
+              <td th:text="${rating.score_num}"></td>
+            </tr>
           </tbody>
         </table>
-
-
       </div>
     </div>
     <!-- /container -->
