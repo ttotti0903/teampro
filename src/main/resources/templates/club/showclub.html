@@ -208,12 +208,12 @@
         </td>
         <td>
           <form action="/accept" method="post">
-            <input type="hidden" id="member" name="member" th:object="${applicant}">
+            <input type="hidden" id="member" name="memberid" th:value="${applicant.getId()}">
             <input type="hidden" id="clubid_" name="clubid" th:value="${club.get().getClubid()}">
             <button id="accept">수락</button>
           </form>
           <form action="/reject" method="post">
-            <input type="hidden" id="member_" name="member_" th:object="${applicant}">
+            <input type="hidden" id="member_" name="memberid" th:value="${applicant.getId()}">
             <input type="hidden" id="clubid__" name="clubid" th:value="${club.get().getClubid()}">
             <button id="reject">거절</button>
           </form>
@@ -255,9 +255,6 @@
 
   </div>
 
-  <script>
-
-  </script>
 </div>
 <!-- /container -->
 <hr />
