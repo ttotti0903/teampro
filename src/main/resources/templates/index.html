@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>명지 동까스</title>
+    <link rel ="stylesheet" href="index.css">
+</head>
+<body>
+    <div id = "top">
+            
+    </div>
+    <div id ="wrap">
+        <header>
+            <div id ="logo">
+                <!--<h1>명지 동까스</h1>-->
+                <a href="index.html">
+                <img src ="../static/img/logo2.png">
+                </a>
+            </div>
+            <div id = "search">
+                <form action ="articleSearch" method = "post">
+                    <input id="search_box" type="text" placeholder="검색어 입력">
+                    <button id="search_button" type="submit"><img id = "search_img" src="../static/img/search.png"></button>
+                </form>   
+            </div>
+        </header>
+        
+        
+        <nav>
+            <div id = "dropdown_div">
+                <img id = "list_img" src = "../static/img/3l.png">
+                <!--
+                <div id = "dropdown_menu">
+                    <ul>
+                        <li><a href="#">명예의 전당</a></li> 
+                        <li><a href="#">채팅방</a></li>
+                        <li><a href="#">회원 목록</a></li>
+                    </ul>
+                </div> 
+            -->
+            </div> 
+            
+            
+            <ul id = "nav_ul">
+                <li><a id = "nav_a" href = "club/clubList.html">동아리</a></li>
+                <li style="padding-left: 60px;"><a id = "nav_a" href = "#">Q&A</a></li>
+                <li style="padding-left: 60px;"><a id = "nav_a" href = "#">스터디</a></li>
+            </ul>
+        </nav>
+        <div id = "container">
+
+            <h1><a id ="contain_a" href="club/clubList.html">동아리</a></h1>
+            <div id = "dongari"></div>
+
+            <h1><a id ="contain_a" href="#">Q&A</a></h1>
+            <div id = "cafestudy"></div>
+          
+            <h1><a id = "contain_a" href="#">스터디</a></h1>
+            <div id = "study"></div>
+
+        </div>
+        <div id = "sidebar">
+            <div id="login">
+                <button id ="login_button" type="button" onclick="location.href='members/login.html'">로그인</button>
+                <h2 id = "member_join"><a id="join_a" href = "members/input-form.html">회원가입</a></h2>
+            </div>
+
+            <a href="#">
+            <div id = "honor">
+                
+            </div>
+            </a>
+
+            <a href="chat/list.html">
+            <div id ="chat_room">
+             
+            </div>
+            </a>
+        </div>
+        <footer>
+
+        </footer>
+    </div>
+
+    <div id = "bottom">
+
+    </div>
+</body>
+</html>
