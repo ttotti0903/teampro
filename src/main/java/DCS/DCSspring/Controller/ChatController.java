@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,9 +28,21 @@ public class ChatController {
     private final RatingService ratingService;
 
     @RequestMapping("/chatlist")
-    public String chatList(Model model){
-        List<ChatRoom> roomList = chatService.findAllRoom();
-        model.addAttribute("roomList",roomList);
+    public String chatList(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long currentUserId = (Long) session.getAttribute("id");
+        Member currentUser = memberService.findOne(currentUserId);
+
+        List<ChatRoom> roomList = chatService.findAllRoom().stream()
+            .filter(room -> Arrays.stream(room.userId)
+                .filter(Objects::nonNull)
+                .noneMatch(blacklistedId -> currentUser.getBlacklist().contains(blacklistedId) || currentUser.getBlacklisted().contains(blacklistedId)))
+            .filter(room -> Arrays.stream(room.userId)
+                .filter(Objects::nonNull)
+                .anyMatch(id -> Objects.equals(memberService.findOne(id).getMajor(), currentUser.getMajor())))
+            .collect(Collectors.toList());
+        
+        model.addAttribute("roomList", roomList);
         return "chat/list";
     }
 
@@ -37,6 +52,8 @@ public class ChatController {
         HttpSession session = request.getSession();
         Long tmp = (Long) session.getAttribute("id");
         Member member = memberService.findOne(tmp);
+        System.out.println(member.getChatRoomId());
+
         if(member.getChatRoomId() != null){
             return "chat/list";
         }
@@ -55,6 +72,7 @@ public class ChatController {
         HttpSession session = request.getSession();
         Long tmp = (Long) session.getAttribute("id");
         Member member = memberService.findOne(tmp);
+        System.out.println(member.getChatRoomId());
         if(member.getChatRoomId() != null){
             return "chat/list";
         }
@@ -97,17 +115,28 @@ public class ChatController {
         List<Member> members = memberService.findMembersByIds(ids);
         System.out.println(members);
         model.addAttribute("members",members);
+        if(room.userNum == 0){
+            chatService.removeRoom(room.getRoomId());
+            member.setChatRoomId(null);
+            return "chat/list";
+        }
         member.setChatRoomId(null);
         return "chat/estimate";
     }
     
     @GetMapping("/goHome")
     public String goHome(HttpServletRequest request){
+        System.out.println("고홈");
         HttpSession session = request.getSession();
         Long tmp = (Long) session.getAttribute("id");
         Member member = memberService.findOne(tmp);
-        member.setChatRoomId(null);
-        return "redirect:/";
+        ChatRoom room = chatService.findRoomById((member.getChatRoomId()));
+        if(room.userNum == 0){
+            chatService.removeRoom(room.getRoomId());
+            member.setChatRoomId(null);
+            return "chat/list";
+        }
+        return "chat/list";
     }
 
     @GetMapping("/chat/temp")
@@ -118,7 +147,9 @@ public class ChatController {
     @PostMapping("/estimateComplite")
     public String estimateComplite(HttpServletRequest request) {
         Enumeration<String> parameterNames = request.getParameterNames();
-
+        HttpSession session = request.getSession();
+        Long ownMemberId = (Long)session.getAttribute("id");
+        Member ownMember = memberService.findOne(ownMemberId);
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             if (paramName.startsWith("score_")) {
@@ -126,9 +157,13 @@ public class ChatController {
                 System.out.println(memberId);
                 int score = Integer.parseInt(request.getParameter(paramName));
                 System.out.println(score);
-
-
                 Member member = memberService.findOne(memberId);
+                if(score == 1){
+                    ownMember.addToBlacklist(memberId);
+                    member.addToBlacklisted(ownMemberId);
+                }
+
+
                 Rating rating = ratingService.findbyMemberId(memberId).get();
                 rating.addScore(score);
                 ratingService.sort();

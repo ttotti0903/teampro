@@ -1,5 +1,7 @@
 package DCS.DCSspring.Domain;
 
+import java.util.HashSet;
+
 public class Member {
     private Long id;
     private String email;
@@ -8,6 +10,31 @@ public class Member {
     private String password;
     private Rating rating;
 
+    
+    private final HashSet<Long> blacklist = new HashSet<>();
+
+    private final HashSet<Long> blacklisted = new HashSet<>();
+    public void addToBlacklisted(Long id) {
+        blacklisted.add(id);
+    }
+    public HashSet<Long> getBlacklisted() {
+        return blacklisted;
+    }
+
+    public void setBlacklisted(Long id) {
+        blacklisted.add(id);
+    }
+    public void addToBlacklist(Long id) {
+        blacklist.add(id);
+    }
+
+    public boolean isBlacklisted(Long id) {
+        return blacklist.contains(id);
+    }
+
+    public HashSet<Long> getBlacklist() {
+        return blacklist;
+    }    
     public String getChatRoomId() {
         return chatRoomId;
     }
@@ -79,4 +106,6 @@ public class Member {
     public void setRating(Rating rating) {
         this.rating = rating;
     }
+
+
 }

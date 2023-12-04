@@ -100,7 +100,7 @@ public class MemberController {
         if(member.getPassword().equals(password)){
             HttpSession session = request.getSession();
             session.setAttribute("id", memberService.getMemberId(member));
-            return "redirect:/";
+            return "home";
         }
         else{
             return "members/login";
@@ -117,6 +117,7 @@ public class MemberController {
             member.setEmail(tmpE);
             member.setPassword(String.valueOf(i));
             member.setGrade(2);
+            member.setMajor(i%3);
             Rating rating = new Rating();
             rating.setStudy_num(3);
             for(int j = 0; j < 10; j++)

@@ -74,4 +74,8 @@ public class ChatService {
         chatRooms.put(randomId, chatRoom);
         return chatRoom;
     }
+
+    public void removeRoom(String roomId) {
+        chatRooms.remove(roomId);
+    }
 }
