@@ -64,7 +64,7 @@
           <div th:each="member : ${members}">
             <label th:text="${member.name}"></label>
             <div class="stars" id="stars">
-              <input type="hidden" name="score" value="0" required />
+              <input type="hidden" value="0" th:name="${'score_' + member.id}" required />
               <span class="star" data-value="1"></span>
               <span class="star" data-value="2"></span>
               <span class="star" data-value="3"></span>

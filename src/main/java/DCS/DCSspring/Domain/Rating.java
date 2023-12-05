@@ -87,13 +87,15 @@ public class Rating {
             met = true;
             calAvg();
         }
-
-
-
     }
 
     public void addStudyNum(){
         study_num++;
+        if (score_num >= 10 && study_num >= 3){
+            met = true;
+            calAvg();
+        }
+
     }
 
     public void calAvg(){

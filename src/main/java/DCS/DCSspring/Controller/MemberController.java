@@ -127,18 +127,42 @@ public class MemberController {
             rating.setMember(member);
         }
 
+        Member member1 = new Member();
+        member1.setName("평가횟수가 부족한 회원");
+        member1.setEmail("iNeedMoreEvaluation");
+        member1.setPassword("qwer");
+        member1.setGrade(2);
+        Rating rating1 = new Rating();
+        rating1.setStudy_num(3);
+        //member1 전공 추가
+        for(int i = 0; i < 9; i ++){
+            rating1.addScore(ran.nextInt(5)+1);
+        }
+        rating1.setMember(member1);
+        member1.setRating(rating1);
+
+        Member member2 = new Member();
+        member2.setName("스터디횟수가 부족한 회원");
+        member2.setEmail("iNeedMoreStudy");
+        member2.setPassword("qwer");
+        member2.setGrade(2);
+        Rating rating2 = new Rating();
+        rating2.setStudy_num(2);
+        //member2 전공 추가
+        for(int i = 0; i < 10; i ++){
+            rating2.addScore(ran.nextInt(5)+1);
+        }
+        rating2.setMember(member2);
+        member2.setRating(rating2);
+
+        ratingService.join(rating1);
+        ratingService.join(rating2);
+        memberService.join(member1);
+        memberService.join(member2);
+
+        rating1.setMember_id(member1.getId());
+        rating2.setMember_id(member2.getId());
         return  "/home";
-        /*
-        Member member = new Member();
-        int Num = 0;
-        String tmpE = "test" + (String.valueOf(Num++));
-        member.setEmail(tmpE);
-        member.setPassword("1");
-        member.setGrade(2);
-        member.setName("더미");
-        member.setMajor(1);
-        memberService.join(member);
-        return "/home";*/
     }
 
 }
