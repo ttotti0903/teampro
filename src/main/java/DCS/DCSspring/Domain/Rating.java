@@ -125,6 +125,6 @@ public class Rating {
                 right_outside -= score[i];
             }
         }
-        score_avg = temp / (double)score_num - left_outside*2;
+        score_avg = temp / ((double)score_num - left_outside*2);
     }
 }

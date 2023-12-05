@@ -86,6 +86,7 @@ public class ChatController {
 
         Long temp = (Long) session.getAttribute("id");
         Member member = memberService.findOne(temp);
+        System.out.println("평점을 매겨주는 회워느이 이름: " + member.getName());
         System.out.println("평점을 매겨주는 회원의 평가 전 스터디횟수: " + member.getRating().getStudy_num());
         member.getRating().addStudyNum();
         System.out.println("평점을 매겨주는 회원의 평가 후 스터디횟수: " + member.getRating().getStudy_num());

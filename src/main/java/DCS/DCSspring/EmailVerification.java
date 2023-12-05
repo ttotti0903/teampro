@@ -12,10 +12,10 @@ public class EmailVerification {
     private static final String SMTP_HOST = "smtp.gmail.com";
     private static final String SMTP_PORT = "587";
     private static final String SMTP_USERNAME = "rbcjfdl132@gmail.com"; // 발신 이메일 주소
-    private static final String SMTP_PASSWORD = "soip suux zthr auza"; // 발신 이메일 비밀번호
+    private static final String SMTP_PASSWORD = "eteb oqio jpqs fpzx"; // 발신 이메일 비밀번호
 
     public static void sendVerificationEmail(String toEmail, String verificationCode,String toname) {
-
+        System.out.println(toEmail);
         // SMTP 서버 설정
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");

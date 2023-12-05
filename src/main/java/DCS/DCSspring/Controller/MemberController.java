@@ -125,6 +125,7 @@ public class MemberController {
             memberService.join(member);
             rating.setMember_id(member.getId());
             rating.setMember(member);
+            member.setRating(rating);
         }
 
         Member member1 = new Member();
