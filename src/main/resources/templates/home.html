@@ -35,18 +35,31 @@
             font-weight: bold;
             text-decoration: none;
         }
-        #contain_a{
+        .contain_a{
             color: white;
             text-decoration: none;
         }
-        /*
-        #top{
-            width: 1800px;
-            height: 50px;
-            background-color: rgb(64, 152, 224);
-
+        .side_a{
+            color: white;
+            text-decoration: none;
         }
-        */
+
+        #sidebar h1{
+            margin-top: 50px;
+            padding-left: 10px;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            border-left: 5px solid  rgb(64, 152, 224);
+            /*-webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: rgb(64, 152, 224);*/
+            text-shadow: 1.5px 0px rgb(64, 152, 224),
+            0px 1.5px rgb(64, 152, 224),
+            -1.5px 0px rgb(64, 152, 224),
+            0px -1.5px rgb(64, 152, 224);
+            margin-bottom: -43px;
+            margin-left: 50px;
+        }
         #bottom{
             margin: auto;
             width: 100%;
@@ -284,10 +297,38 @@
         <div id = "container">
 
             <h1><a class ="contain_a" href="club/clubList.html">동아리</a></h1>
-            <div id = "dongari"></div>
+            <div id = "dongari">
+                <tr th:each="club : ${clubs}">
+                    <td>
+                        <a th:href="@{/club/{id}(id=${club.getClubid()})}"
+                           th:text="${club.title}"
+                        ></a>
+                    </td>
+                    <td>
+                        <span th:text="${club.remainingTime}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${club.getAuthor().getName()}"></span>
+                    </td>
+                </tr>
+            </div>
 
             <h1><a class ="contain_a" href="/articleList">Q&A</a></h1>
-            <div id = "cafestudy"></div>
+            <div id = "cafestudy">
+                <tr th:each="article : ${articles}">
+                    <td>
+                        <a th:href="@{/articles/{id}(id=${article.getarticleId()})}"
+                           th:text="${article.title}"
+                        ></a>
+                    </td>
+                    <td>
+                        <span th:text="${article.remainingTime}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${article.getAuthor().getName()}"></span>
+                    </td>
+                </tr>
+            </div>
           
             <h1><a class = "contain_a" href="/chatlist">스터디</a></h1>
             <div id = "study"></div>
@@ -299,12 +340,13 @@
                 <h2 id = "member_join"><a id="join_a" href = "/input-form">회원가입</a></h2>
             </div>
 
+            <h1><a class = "side_a" href="">명예의 전당</a> </h1>
             <a href="#">
             <div id = "honor">
                 
             </div>
             </a>
-
+            <h1><a class = "side_a" href="">채팅방</a> </h1>
             <a href="chat/list.html">
             <div id ="chat_room">
              

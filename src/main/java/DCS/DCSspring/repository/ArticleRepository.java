@@ -18,4 +18,6 @@ public interface ArticleRepository {
     List<Article> sort_by_deadlineInt();
 
     List<Article> deleteArticle(Long id);
+
+    List<Article> SelcetFive();
 }

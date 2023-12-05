@@ -13,5 +13,5 @@ public interface ClubRepository {
     List<Club> findAll();
     List<Club> sort_by_deadlineInt();
     List<Club> deleteClub(Long id);
-
+    List<Club> SelcetFive();
 }

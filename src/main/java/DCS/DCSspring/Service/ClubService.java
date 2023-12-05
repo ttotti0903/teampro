@@ -33,4 +33,8 @@ public class ClubService {
         clubRepository.deleteClub(id);
         return clubRepository.findAll();
     }
+
+    public List<Club> SelcetFive() {
+        return clubRepository.SelcetFive();
+    }
 }

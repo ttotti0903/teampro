@@ -41,6 +41,10 @@ public class ArticleService {
         articleRepository.deleteArticle(id);
         return articleRepository.findAll();
     }
+
+    public List<Article> SelcetFive() {
+        return articleRepository.SelcetFive();
+    }
     
 }
 
