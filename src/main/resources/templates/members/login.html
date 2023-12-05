@@ -99,12 +99,18 @@
         align-items: center;
         gap: 4px;
       }
+      #join {
+        margin: 20px;
+        border: none;
+        background-color: #fff;
+        color: gray;
+      }
     </style>
   </head>
   <body>
     <h2>로그인</h2>
     <div class="container">
-      <form action="login" method="post">
+      <form action="login" method="post" onsubmit="return validateForm()">
         <div class="emailform">
           <span class="email">
             <label for="email"></label>
@@ -146,6 +152,9 @@
         </div>
         <button id="submit">제출</button>
       </form>
+      <button id="join" type="button" onclick="location.href='/input-form'">
+        회원 가입
+      </button>
     </div>
     <script>
       function resetInput(inputId) {

@@ -1,21 +1,107 @@
 <!-- chat/estimate.html -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
     <title>평점 매기기</title>
-</head>
-<body>
-<h1>채팅방 평점 매기기</h1>
-<!-- 여기에서 평점을 매기는 폼을 구현하고, 필요한 정보를 사용하여 서버로 전송 -->
-<form action="estimateComplite" method = "post">
-    <div th:each="member : ${members}">
-        <label th:text="${member.name}"></label>
-        <input type="number" min="0" max="5" step="1" th:name="${'score_' + member.id}" required>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js"></script>
+    <style>
+      button {
+        background-color: #fff;
+        color: #4098e0;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      h1 {
+        color: white;
+      }
+      .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border-radius: 5px;
+        width: 50vh;
+        height: 50vh;
+        padding: 0 20px;
+        border: 1px solid #4098e0;
+        background-color: #4098e0;
+      }
+      .stars {
+        unicode-bidi: bidi-override;
+        direction: ltr;
+      }
+      .star {
+        display: inline-block;
+        font-size: 35px;
+        color: white;
+        cursor: pointer;
+      }
+      .star:before {
+        content: "☆";
+      }
+      .star.filled:before {
+        content: "★";
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>채팅방 평점 매기기</h1>
+      <!-- 여기에서 평점을 매기는 폼을 구현하고, 필요한 정보를 사용하여 서버로 전송 -->
+      <form action="estimateComplite" method="post">
+        <div class="ratings" id="ratings">
+          <div th:each="member : ${members}">
+            <label th:text="${member.name}"></label>
+            <div class="stars" id="stars">
+              <input type="hidden" name="score" value="0" required />
+              <span class="star" data-value="1"></span>
+              <span class="star" data-value="2"></span>
+              <span class="star" data-value="3"></span>
+              <span class="star" data-value="4"></span>
+              <span class="star" data-value="5"></span>
+            </div>
+          </div>
+        </div>
+        <button>제출</button>
+      </form>
     </div>
-    <button>Submit</button>
-</form>
-</body>
+  </body>
+  <script>
+    const stars = document.querySelectorAll(".star");
+
+    function handleStarClick(event) {
+      const clickedStarValue = parseInt(
+        event.target.getAttribute("data-value")
+      );
+
+      // 모든 별에서 'filled' 클래스 제거
+      stars.forEach((star) => star.classList.remove("filled"));
+
+      // 클릭한 별까지 채우기
+      for (let i = 0; i < clickedStarValue; i++) {
+        stars[i].classList.add("filled");
+      }
+
+      // 선택한 별의 값을 hidden input에 설정
+      const hiddenInput = event.target.parentElement.querySelector(
+        'input[type="hidden"]'
+      );
+      hiddenInput.value = clickedStarValue;
+    }
+
+    stars.forEach((star) => {
+      star.addEventListener("click", handleStarClick);
+    });
+  </script>
 </html>
