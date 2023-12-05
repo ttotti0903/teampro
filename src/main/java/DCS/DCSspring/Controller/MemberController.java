@@ -128,7 +128,7 @@ public class MemberController {
             rating.setMember(member);
         }
 
-        return  "/home";
+        return "home";
         /*
         Member member = new Member();
         int Num = 0;
