@@ -137,7 +137,7 @@ public class ClubController {
         Optional<Club> club = clubService.findClubById(clubid);
         club.get().addApplicant(memberService.findOne(temp));
         System.out.println("club/showclub 반환됨");
-        return "redirect:/showclub";
+        return "redirect:/club/" + String.valueOf(clubid);
     }
     @PostMapping(value="/accept")
     public String Accept(@RequestParam("memberid") Long memberId, @RequestParam("clubid") Long clubId, HttpServletRequest request){
@@ -148,7 +148,7 @@ public class ClubController {
         Member member = memberService.findOne(memberId);
         Optional<Club> club = clubService.findClubById(clubId);
         club.get().Confirm(member);
-        return "club/showclub";
+        return "redirect:/club/" + String.valueOf(clubId);
     }
     @PostMapping(value = "/reject")
     public String Reject(@RequestParam("memberid") Long memberId, @RequestParam("clubid") Long clubId, HttpServletRequest request){
@@ -159,6 +159,6 @@ public class ClubController {
         Member member = memberService.findOne(memberId);
 
         club.get().deleteApplicant(member);
-        return"club/showclub";
+        return "redirect:/club/" + String.valueOf(clubId);
     }
 }

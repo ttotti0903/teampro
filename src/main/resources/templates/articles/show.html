@@ -79,7 +79,7 @@
         color: #4098e0;
       }
       .column {
-        display: "flex";
+        display: flex;
       }
       .title {
         align-items: center;
@@ -101,7 +101,101 @@
         display: block;
         float: right;
       }
+      .댓글 {
+        display: flex;
+        flex-direction: row; /* 댓글 내용을 가로로 배치합니다. */
+        background-color: #ffffff; /* 댓글 배경색을 하얀색으로 지정합니다. */
+        border: 1px solid #ddd; /* 테두리를 추가합니다. */
+        padding: 10px; /* 내부 여백을 지정합니다. */
+        margin-bottom: 10px; /* 댓글 사이에 간격을 줍니다. */
+      }
+
+      /* 대댓글들을 감싸는 div에 스타일을 적용합니다. */
+      .대댓글들 {
+        margin-left: 20px; /* 대댓글을 오른쪽으로 옮깁니다. */
+      }
+
+      /* 각각의 대댓글에 스타일을 적용합니다. */
+      .대댓글 {
+        display: flex;
+        flex-direction: row; /* 대댓글 내용을 가로로 배치합니다. */
+        background-color: #f9f9f9; /* 대댓글 배경색을 연회색으로 지정합니다. */
+        border: 1px solid #ddd; /* 테두리를 추가합니다. */
+        padding: 8px; /* 내부 여백을 지정합니다. */
+        margin-bottom: 8px; /* 대댓글 사이에 간격을 줍니다. */
+      }
     </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+        const replyButtons = document.querySelectorAll('.replyButton');
+        replyButtons.forEach((replyButton, index) => {
+          replyButton.addEventListener('click', () => {
+            const currentCommentBlock = replyButton.closest('.댓글블럭');
+            const allCommentBlocks = document.querySelectorAll('.댓글블럭');
+
+            // 1. 모든 댓글블럭에 replyArea가 없을 경우 눌린 대댓글 버튼이 있는 댓글 블럭에 replyArea를 추가한다.
+            const isOpen = currentCommentBlock.querySelector('.replyArea');
+
+            if (!isOpen) {
+              const commentId = replyButton.getAttribute('data-commentid');
+              createReplyRow(currentCommentBlock, commentId);
+            }
+
+            // 2. replyArea가 열여있는 댓글블럭의 대댓글 버튼이 눌릴 경우 replyArea를 삭제한다.
+            allCommentBlocks.forEach(commentBlock => {
+              if (commentBlock !== currentCommentBlock) {
+                const openReplyArea = commentBlock.querySelector('.replyArea');
+                if (openReplyArea) {
+                  openReplyArea.parentElement.removeChild(openReplyArea);
+                }
+              }
+            });
+          });
+        });
+
+        function createReplyRow(commentIndex, commentId) {
+          const replyText = document.createElement('input');
+          replyText.type = 'text';
+          replyText.value = '대댓글 입력창';
+          replyText.className = 'replyText';
+
+          const sendReply = document.createElement('button');
+          sendReply.className = 'sendReply';
+          sendReply.textContent = '대댓글입력';
+
+          const replyArea = document.createElement('div');
+          replyArea.className = 'replyArea';
+
+          replyArea.appendChild(replyText);
+          replyArea.appendChild(sendReply);
+
+          commentIndex.appendChild(replyArea);
+
+          sendReply.addEventListener('click', (event) =>{
+            const formData = new URLSearchParams();
+            formData.append('content', replyText.value)
+            formData.append('commentId','' + commentId)
+
+            fetch('/add_reply', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: formData,
+            })
+            .then(response => response.text())
+            .then(data => {
+              console.log('컨트롤러 응답:', data);
+            })
+            .catch(error => {
+              console.error('컨트롤러 호출 중 오류 발생:', error);
+            });
+          })
+        }
+      })
+    </script>
   </head>
   <body>
     <div class="container">
@@ -166,25 +260,28 @@
                 >
               </td>
             </tr>
-            <tr>
-
-            </tr>
-            <tr th:each="comment : ${article.get().getComments()}">
-              <td>
-                <p th:text="${comment.getAuther()}">
-
-                </p>
-                <p th:text="${comment.content}">
-                </p>
-              </td>
-            </tr>
           </div>
         </tbody>
       </table>
-      <table>
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+
+      <section>
+        <fieldset>댓글영역</fieldset>
+        <div class="댓글창" th:each="comment, commentIndex: ${article.get().getComments()}">
+          <div class="댓글블럭" th:id="'comment_' + ${commentIndex.index}">
+            <div class="댓글">
+              <p th:text="'댓글 작성자:' + ${comment.getAuther()}"></p>
+              <p th:text="' 댓글 내용:' + ${comment.content}"></p>
+              <button class="replyButton" th:id="'replyButton_' + ${commentIndex.index}" th:attr="data-commentid=${comment.commentid}">대댓글</button>
+            </div>
+            <div class="대댓글들" th:each="reply, replyIndex: ${comment.getReplyList()}" th:id="'reply_' + ${replyIndex.index}">
+              <div class="대댓글">
+                <p th:text="'대댓글 작성자:' + ${reply.getAuther().getName()}"></p>
+                <p th:text="' 대댓글 내용:' + ${reply.getContent()}"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <form action="/add_comment" method="post">
         <label for="content">댓글</label>
         <input type="text" id="content" name="content" required>

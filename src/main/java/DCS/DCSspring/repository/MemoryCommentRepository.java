@@ -13,8 +13,8 @@ public class MemoryCommentRepository implements CommentRepository {
     private static long sequence = 0L;
     @Override
     public Comment save(Comment comment) {
-        comment.setArticleid(++sequence);
-        store.put(comment.getArticleid(),comment);
+        comment.setCommentid(sequence++);
+        store.put(comment.getCommentid(),comment);
         return comment;
     }
 
@@ -22,5 +22,10 @@ public class MemoryCommentRepository implements CommentRepository {
         return store.values().stream()
                 .filter(comment -> comment.getArticleid().compareTo(id) == 0)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Comment> findById(Long id) {
+        return  Optional.ofNullable(store.get(id));
     }
 }

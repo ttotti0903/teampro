@@ -10,6 +10,25 @@ public class Comment {
     private LocalDateTime date;
     private Long articleid;
     private ArrayList<Reply> replyList;
+    public Comment(){
+        replyList = new ArrayList<>();
+    }
+
+    public Long getCommentid() {
+        return commentid;
+    }
+
+    public void setCommentid(Long commentid) {
+        this.commentid = commentid;
+    }
+
+    public ArrayList<Reply> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(ArrayList<Reply> replyList) {
+        this.replyList = replyList;
+    }
 
     public String getAuther() {
         return auther;
@@ -49,5 +68,9 @@ public class Comment {
 
     public void setReply(ArrayList<Reply> reply) {
         this.replyList = reply;
+    }
+
+    public void addReply(Reply reply) {
+        replyList.add(reply);
     }
 }
