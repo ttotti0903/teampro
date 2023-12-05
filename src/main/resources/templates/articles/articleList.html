@@ -93,14 +93,10 @@
         display: flex;
       }
       .title {
-        align-items: center;
-        margin-top: 100px;
-        margin-bottom: 220px;
-        margin-left: 330px;
       }
-      .login-button {
-        background-color: #4098e0;
-        color: #fff;
+      #login_button {
+        background-color: #fff;
+        color: #4098e0;
         border: none;
         border-radius: 3px;
         cursor: pointer;
@@ -108,7 +104,7 @@
         margin-right: 10px;
         margin-bottom: -30px;
       }
-      .login-button:hover {
+      #login_button:hover {
         background-color: #0056b3;
       }
       nav {
@@ -148,38 +144,69 @@
         text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
           -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
       }
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        margin-top: 100px;
+        margin-bottom: 220px;
+      }
+      #write {
+        margin-right: 30px;
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <nav>
         <div class="login">
-          <button class="login-button">로그인</button>
+          <button
+            id="login_button"
+            type="button"
+            onclick="location.href='/login'"
+          >
+            로그인
+          </button>
         </div>
       </nav>
       <div id="navi">
         <div id="dropdown_div">
-          <img id="list_img" src="../../static/img/3l.png" />
+          <img id="list_img" src="/img/3l.png" />
         </div>
 
         <ul id="nav_ul">
-          <li><a id="nav_a" href="../club/clubList.html">동아리</a></li>
-          <li style="padding-left: 60px"><a id="nav_a" href="#">Q&A</a></li>
-          <li style="padding-left: 60px"><a id="nav_a" href="#">스터디</a></li>
+          <li><a id="nav_a" href="club/clubList.html">동아리</a></li>
+          <li style="padding-left: 60px">
+            <a id="nav_a" href="/articleList">Q&A</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a id="nav_a" href="/chatlist">스터디</a>
+          </li>
         </ul>
       </div>
       <div class="title">
+        <button id="write" type="button" onclick="location.href='/new'">
+          게시글 쓰기
+        </button>
         <form action="articleSearch" method="post">
           <!--<label id="inform">검색할 게시물의 제목</label>-->
           <input
             type="text"
             id="title"
             name="title"
-            placeholder="검색어 입력"
+            placeholder=" 검색어 입력"
             required
           />
           <button id="search_button">
-            <img id="search_img" src="../../static/img/search.png" />
+            <img id="search_img" src="/img/search.png" />
           </button>
         </form>
       </div>
