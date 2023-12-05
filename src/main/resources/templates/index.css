@@ -18,7 +18,7 @@ li :hover{
    
     border-bottom: 3px solid white;
 }
-#nav_a{
+.nav_a{
     color: white;
     text-shadow: 2px 0px rgb(32, 120, 192), 
     0px 2px rgb(32, 120, 192), 

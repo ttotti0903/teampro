@@ -19,4 +19,7 @@ public class CommentService {
         commentRepository.save(comment);
         return comment.getArticleid();
     }
+    public Comment findOne(Long commentid){
+        return commentRepository.findById(commentid).get();
+    }
 }

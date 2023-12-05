@@ -50,4 +50,8 @@ public class SpringConfig {
     @Bean
     public ClubService clubService(){return new ClubService(clubRepository());
     }
+    @Bean
+    public ReplyRepository replyRepository(){return new MemoryReplyRepository();}
+    @Bean
+    public ReplyService replyService(){return new ReplyService(replyRepository());}
 }
