@@ -83,6 +83,12 @@ public class ChatController {
         ChatRoom room = chatService.findRoomById(roomId);
         chatService.quitMember(tmp,room);
         room.userNum--;
+
+        Long temp = (Long) session.getAttribute("id");
+        Member member = memberService.findOne(temp);
+        System.out.println("평점을 매겨주는 회원의 평가 전 스터디횟수: " + member.getRating().getStudy_num());
+        member.getRating().addStudyNum();
+        System.out.println("평점을 매겨주는 회원의 평가 후 스터디횟수: " + member.getRating().getStudy_num());
         // 채팅방 평점을 매기는 페이지로 이동
         return "chat/temp";
     }
@@ -117,19 +123,28 @@ public class ChatController {
 
     @PostMapping("/estimateComplite")
     public String estimateComplite(HttpServletRequest request) {
+        System.out.println("estimateCompite 매핑됨");
         Enumeration<String> parameterNames = request.getParameterNames();
+        HttpSession session = request.getSession();//
+        Long ownMemberId = (Long)session.getAttribute("id"); //
+        Member ownMember = memberService.findOne(ownMemberId);//
 
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
+            System.out.println("paramName: " + paramName);
             if (paramName.startsWith("score_")) {
                 Long memberId = Long.valueOf(paramName.substring(6));
                 System.out.println(memberId);
                 int score = Integer.parseInt(request.getParameter(paramName));
                 System.out.println(score);
+                Member member = memberService.findOne(memberId);//
+                if(score == 1){//
+                    //ownMember.addToBlacklist(memberId);//
+                    //member.addToBlacklisted(ownMemberId);//
+                }
 
-
-                Member member = memberService.findOne(memberId);
                 Rating rating = ratingService.findbyMemberId(memberId).get();
+                System.out.println("전송받은 점수:" + score);
                 rating.addScore(score);
                 ratingService.sort();
             }

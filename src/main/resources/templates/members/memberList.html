@@ -63,6 +63,7 @@
               <th>이메일</th>
               <th>전공</th>
               <th>학년</th>
+
             </tr>
           </thead>
           <tbody>
@@ -82,6 +83,7 @@
               <th>아이디</th>
               <th>평균평점</th>
               <th>평가개수</th>
+              <th>스터디횟수</th>
             </tr>
           </thead>
           <tbody>
@@ -90,6 +92,7 @@
               <td th:text="${rating.member_id}"></td>
               <td th:text="${rating.score_avg}"></td>
               <td th:text="${rating.score_num}"></td>
+              <td th:text="${rating.study_num}"></td>
             </tr>
           </tbody>
         </table>
