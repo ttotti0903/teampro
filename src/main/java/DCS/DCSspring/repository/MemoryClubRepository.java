@@ -1,6 +1,5 @@
 package DCS.DCSspring.repository;
 
-import DCS.DCSspring.Domain.Article;
 import DCS.DCSspring.Domain.Club;
 
 import java.util.*;
@@ -52,5 +51,12 @@ public class MemoryClubRepository implements ClubRepository{
     public List<Club> deleteClub(Long id) {
         store.remove(id);
         return new ArrayList<>(store.values());
+    }
+    @Override
+    public List<Club> SelcetFive() {
+        return store.values().stream()
+                .sorted(Comparator.comparing(Club::getDeadline_int))
+                .limit(5)
+                .collect(Collectors.toList());
     }
 }

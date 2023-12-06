@@ -39,19 +39,26 @@ public class MemoryArticleRepository implements ArticleRepository{
         return new ArrayList<>(store.values());
 
     }
-
     public void clearStore(){
         store.clear();
     }
 
+    @Override
     public List<Article> sort_by_deadlineInt() {
         return store.values().stream()
                 .sorted(Comparator.comparing(Article::getDeadline_int))
                 .collect(Collectors.toList());
     }
-
+    @Override
     public List<Article> deleteArticle(Long id) {
         store.remove(id);
         return new ArrayList<>(store.values());
+    }
+    @Override
+    public List<Article> SelcetFive() {
+        return store.values().stream()
+                .sorted(Comparator.comparing(Article::getDeadline_int))
+                .limit(5)
+                .collect(Collectors.toList());
     }
 }
