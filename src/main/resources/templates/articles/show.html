@@ -28,6 +28,7 @@
         margin: 20px;
         padding: 20px;
         min-height: 600px;
+        min-width: 800px;
       }
 
       label {
@@ -50,9 +51,19 @@
         border-radius: 3px;
         cursor: pointer;
       }
-     
+      .replyButton {
+        border: none;
+        background-color: #fff;
+        color: #fff;
+      }
+      .replyButton:hover {
+        border: none;
+        background-color: #fff;
+        color: #fff;
+      }
+
       #title {
-        float : left;
+        float: left;
         width: 400px;
         height: 50px;
         border: 3px solid rgb(64, 152, 224);
@@ -64,12 +75,12 @@
         border: none;
         border-radius: 3px;
         cursor: pointer;
-     }
-      #search_img{
+      }
+      #search_img {
         width: 60px;
         height: 60px;
       }
-      #search_button{
+      #search_button {
         float: left;
         background: none;
         border: none;
@@ -124,12 +135,23 @@
       .column {
         display: flex;
       }
-      .title {
+      /*.title {
         align-items: center;
         margin-top: 100px;
         margin-bottom: 220px;
         margin-left: 330px;
+      }*/
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        margin-top: 100px;
+        margin-bottom: 120px;
       }
+
       .login-button {
         background-color: #4098e0;
         color: #fff;
@@ -176,18 +198,24 @@
       }
       .nav_a {
         color: white;
-      text-shadow: 2px 0px rgb(32, 120, 192), 
-      0px 2px rgb(32, 120, 192), 
-      -2px 0px rgb(32, 120, 192), 
-      0px -2px rgb(32, 120, 192);
-      font-weight: bold;
-      text-decoration: none;
+        text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
+          -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
+        font-weight: bold;
+        text-decoration: none;
       }
-      li :hover{
+      li :hover {
         color: white;
         text-decoration: none;
-       border-bottom: 3px solid white;
-}
+        border-bottom: 3px solid white;
+      }
+      #write {
+        margin-right: 30px;
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
 
       .댓글 {
         display: flex;
@@ -215,26 +243,25 @@
     </style>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-
-        const replyButtons = document.querySelectorAll('.replyButton');
+      document.addEventListener("DOMContentLoaded", () => {
+        const replyButtons = document.querySelectorAll(".replyButton");
         replyButtons.forEach((replyButton, index) => {
-          replyButton.addEventListener('click', () => {
-            const currentCommentBlock = replyButton.closest('.댓글블럭');
-            const allCommentBlocks = document.querySelectorAll('.댓글블럭');
+          replyButton.addEventListener("click", () => {
+            const currentCommentBlock = replyButton.closest(".댓글블럭");
+            const allCommentBlocks = document.querySelectorAll(".댓글블럭");
 
             // 1. 모든 댓글블럭에 replyArea가 없을 경우 눌린 대댓글 버튼이 있는 댓글 블럭에 replyArea를 추가한다.
-            const isOpen = currentCommentBlock.querySelector('.replyArea');
+            const isOpen = currentCommentBlock.querySelector(".replyArea");
 
             if (!isOpen) {
-              const commentId = replyButton.getAttribute('data-commentid');
+              const commentId = replyButton.getAttribute("data-commentid");
               createReplyRow(currentCommentBlock, commentId);
             }
 
             // 2. replyArea가 열여있는 댓글블럭의 대댓글 버튼이 눌릴 경우 replyArea를 삭제한다.
-            allCommentBlocks.forEach(commentBlock => {
+            allCommentBlocks.forEach((commentBlock) => {
               if (commentBlock !== currentCommentBlock) {
-                const openReplyArea = commentBlock.querySelector('.replyArea');
+                const openReplyArea = commentBlock.querySelector(".replyArea");
                 if (openReplyArea) {
                   openReplyArea.parentElement.removeChild(openReplyArea);
                 }
@@ -244,52 +271,59 @@
         });
 
         function createReplyRow(commentIndex, commentId) {
-          const replyText = document.createElement('input');
-          replyText.type = 'text';
-          replyText.value = '대댓글 입력창';
-          replyText.className = 'replyText';
+          const replyText = document.createElement("input");
+          replyText.type = "text";
+          replyText.className = "replyText";
+          replyText.placeholder = "대댓글 입력";
 
-          const sendReply = document.createElement('button');
-          sendReply.className = 'sendReply';
-          sendReply.textContent = '대댓글입력';
+          const sendReply = document.createElement("button");
+          sendReply.className = "sendReply";
+          sendReply.textContent = "등록";
+          sendReply.style.marginLeft = "10px";
 
-          const replyArea = document.createElement('div');
-          replyArea.className = 'replyArea';
+          const replyArea = document.createElement("div");
+          replyArea.className = "replyArea";
 
           replyArea.appendChild(replyText);
           replyArea.appendChild(sendReply);
 
           commentIndex.appendChild(replyArea);
 
-          sendReply.addEventListener('click', (event) =>{
+          sendReply.addEventListener("click", (event) => {
             const formData = new URLSearchParams();
-            formData.append('content', replyText.value)
-            formData.append('commentId','' + commentId)
+            formData.append("content", replyText.value);
+            formData.append("commentId", "" + commentId);
 
-            fetch('/add_reply', {
-              method: 'POST',
+            fetch("/add_reply", {
+              method: "POST",
               headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                "Content-Type": "application/x-www-form-urlencoded",
               },
               body: formData,
             })
-            .then(response => response.text())
-            .then(data => {
-              console.log('컨트롤러 응답:', data);
-            })
-            .catch(error => {
-              console.error('컨트롤러 호출 중 오류 발생:', error);
-            });
-          })
+              .then((response) => response.text())
+              .then((data) => {
+                console.log("컨트롤러 응답:", data);
+              })
+              .catch((error) => {
+                console.error("컨트롤러 호출 중 오류 발생:", error);
+              });
+          });
         }
-      })
+      });
     </script>
   </head>
   <body>
     <div class="container">
       <nav>
         <div class="login">
-          <button class="login-button">로그인</button>
+          <button
+            class="login-button"
+            type="button"
+            onclick="location.href='/login'"
+          >
+            로그인
+          </button>
         </div>
       </nav>
 
@@ -299,17 +333,32 @@
         </div>
 
         <ul id="nav_ul">
-          <li><a class = "nav_a" href = "/clubList">동아리</a></li>
-          <li style="padding-left: 60px;"><a class = "nav_a" href = "/articleList">Q&A</a></li>
-          <li style="padding-left: 60px;"><a class = "nav_a" href = "/chatlist">스터디</a></li>
-          <li style="padding-left: 60px;"><a class = "nav_a" href = "/temp">더미회원</a></li>
+          <li><a class="nav_a" href="/clubList">동아리</a></li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/articleList">Q&A</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/chatlist">스터디</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/temp">더미회원</a>
+          </li>
         </ul>
       </div>
 
       <div class="title">
+        <button id="write" type="button" onclick="location.href='/new'">
+          게시글 쓰기
+        </button>
         <form action="articleSearch" method="post">
           <!--<label id="inform">검색할 게시물의 제목</label>-->
-          <input type="text" id="title" name="title" placeholder="검색어 입력" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="검색어 입력"
+            required
+          />
           <button id="search_button">
             <img id="search_img" src="../../static/img/search.png" />
           </button>
@@ -329,7 +378,7 @@
         </thead>
         <tbody>
           <form action="deadLine_nearer" method="post">
-             <button id="time_button">마감 시간 순</button>
+            <button id="time_button">마감 시간 순</button>
           </form>
           <div class="column">
             <tr th:if="${article.isPresent()}" th:each="article : ${article}">
@@ -370,17 +419,30 @@
 
       <section>
         <fieldset>댓글영역</fieldset>
-        <div class="댓글창" th:each="comment, commentIndex: ${article.get().getComments()}">
+        <div
+          class="댓글창"
+          th:each="comment, commentIndex: ${article.get().getComments()}"
+        >
           <div class="댓글블럭" th:id="'comment_' + ${commentIndex.index}">
             <div class="댓글">
-              <p th:text="'댓글 작성자:' + ${comment.getAuther()}"></p>
-              <p th:text="' 댓글 내용:' + ${comment.content}"></p>
-              <button class="replyButton" th:id="'replyButton_' + ${commentIndex.index}" th:attr="data-commentid=${comment.commentid}">대댓글</button>
+              <p th:text="${comment.getAuther()} +  ' : '"></p>
+              <p th:text="${comment.content}"></p>
+              <button
+                class="replyButton"
+                th:id="'replyButton_' + ${commentIndex.index}"
+                th:attr="data-commentid=${comment.commentid}"
+              >
+                <img id="comment_img" src="/img/comment.svg" />
+              </button>
             </div>
-            <div class="대댓글들" th:each="reply, replyIndex: ${comment.getReplyList()}" th:id="'reply_' + ${replyIndex.index}">
+            <div
+              class="대댓글들"
+              th:each="reply, replyIndex: ${comment.getReplyList()}"
+              th:id="'reply_' + ${replyIndex.index}"
+            >
               <div class="대댓글">
-                <p th:text="'대댓글 작성자:' + ${reply.getAuther().getName()}"></p>
-                <p th:text="' 대댓글 내용:' + ${reply.getContent()}"></p>
+                <p th:text="${reply.getAuther().getName()} + ' : '"></p>
+                <p th:text="${reply.getContent()}"></p>
               </div>
             </div>
           </div>
@@ -388,12 +450,17 @@
       </section>
       <form action="/add_comment" method="post">
         <label for="content">댓글</label>
-        <input type="text" id="content" name="content" required>
+        <input type="text" id="content" name="content" required />
 
         <!-- 게시물 번호를 hidden으로 전달 -->
-        <input type="hidden" id="articleId" name="articleId" th:value="${article.get().getarticleId()}">
+        <input
+          type="hidden"
+          id="articleId"
+          name="articleId"
+          th:value="${article.get().getarticleId()}"
+        />
 
-        <button id ="comment_button" type="submit">등록</button>
+        <button id="comment_button" type="submit">등록</button>
       </form>
     </div>
     <!-- /container -->
