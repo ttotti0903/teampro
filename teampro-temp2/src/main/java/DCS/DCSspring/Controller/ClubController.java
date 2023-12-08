@@ -162,7 +162,7 @@ public class ClubController {
         return "redirect:/club/" + String.valueOf(clubId);
     }
     @PostMapping(value = "clubSearch")
-    public String articleSearch(@RequestParam String title, Model model){
+    public String clubSearch(@RequestParam String title, Model model){
         System.out.println("mapping "+title);
         List<Club> clubs = clubService.findClubByTitle(title);
         model.addAttribute("clubs", clubs);
