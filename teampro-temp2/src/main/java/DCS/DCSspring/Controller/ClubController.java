@@ -161,4 +161,19 @@ public class ClubController {
         club.get().deleteApplicant(member);
         return "redirect:/club/" + String.valueOf(clubId);
     }
+    @PostMapping(value = "clubSearch")
+    public String articleSearch(@RequestParam String title, Model model){
+        System.out.println("mapping "+title);
+        List<Club> clubs = clubService.findClubByTitle(title);
+        model.addAttribute("clubs", clubs);
+        return "club/clubSearch";
+    }
+
+    @PostMapping(value = "club_deadLine_nearer")
+    public String deadLine_nearer(Model model){
+        System.out.println("113");
+        List<Club> clubs = clubService.sort_by_deadlineInt();
+        model.addAttribute("clubs", clubs);
+        return "club/clubList";
+    }
 }

@@ -37,4 +37,7 @@ public class ClubService {
     public List<Club> SelcetFive() {
         return clubRepository.SelcetFive();
     }
+    public List<Club> findClubByTitle(String title){
+        return clubRepository.findByTitle(title);
+    }
 }
