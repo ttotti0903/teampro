@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>로그인</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 200px;
+      }
+      h2 {
+        color: #4098e0;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        padding: 50px;
+        max-width: 500px;
+      }
+      .reset {
+        background-color: #fff;
+        color: #4098e0;
+        border: 1px solid #4098e0;
+        border-radius: 3px;
+        transition: background-color 0.3s ease; /* hover 효과 추가 */
+      }
+      .reset:hover {
+        background-color: #4098e0; /* hover 시 배경색 변경 */
+        color: #fff; /* hover 시 글자색 변경 */
+      }
+      label {
+        color: #4098e0;
+      }
+      input[type="text"] {
+        width: 300px;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      input[type="password"] {
+        width: 300px;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      #submit {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 10px 166px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+      }
+      #submit:hover {
+        background-color: #0056b3;
+      }
+      #password {
+        margin-top: 10px;
+        width: 300px;
+        height: 40px;
+        border: 1px solid lightgray;
+      }
+      .email {
+        display: flex;
+        align-items: center;
+        width: 300px;
+        border: 1px solid #ccc;
+        padding: 6px;
+        margin-left: 4px;
+        border-radius: 3px;
+      }
+      .email input,
+      .email select {
+        border: none;
+        margin: 0;
+        padding: 4px;
+        outline: none;
+      }
+      .email select {
+        background-color: transparent;
+      }
+      .emailform {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      #join {
+        margin: 20px;
+        border: none;
+        background-color: #fff;
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>로그인</h2>
+    <div class="container">
+      <form action="login" method="post" onsubmit="return validateForm()">
+        <div class="emailform">
+          <span class="email">
+            <label for="email"></label>
+            <input
+              placeholder="메일"
+              type="text"
+              id="email"
+              name="email"
+              required
+            />
+            <select name="email_domain" id="email_domain">
+              <option value="@mju.ac.kr">@mju.ac.kr</option>
+            </select>
+          </span>
+          <span>
+            <input
+              class="reset"
+              type="button"
+              onclick="resetInput('email')"
+              value="초기화"
+            />
+          </span>
+        </div>
+        <div class="inputForm">
+          <label for="password"></label>
+          <input
+            placeholder="비밀번호"
+            type="password"
+            id="password"
+            name="password"
+            required
+          />
+          <input
+            class="reset"
+            type="button"
+            onclick="resetInput('password')"
+            value="초기화"
+          />
+        </div>
+        <button id="submit">제출</button>
+      </form>
+      <button id="join" type="button" onclick="location.href='/input-form'">
+        회원 가입
+      </button>
+    </div>
+    <script>
+      function resetInput(inputId) {
+        document.getElementById(inputId).value = "";
+      }
+    </script>
+  </body>
+</html>

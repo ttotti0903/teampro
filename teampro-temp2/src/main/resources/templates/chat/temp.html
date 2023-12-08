@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      h1 {
+        font-size: 1rem;
+        color: white;
+      }
+      .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border-radius: 5px;
+        width: 50vh;
+        height: 20vh;
+        padding: 0 20px;
+        border: 1px solid #4098e0;
+        background-color: #4098e0;
+      }
+      button {
+        width: 70px;
+        height: 50px;
+        background-color: #fff;
+        color: #4098e0;
+        border: 1px solid #4098e0;
+        border-radius: 3px;
+        transition: background-color 0.3s ease; /* hover 효과 추가 */
+      }
+      button:hover {
+        background-color: #0056b3;
+        color: #fff; /* hover 시 글자색 변경 */
+      }
+      .estimate {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>방금 채팅 어떠셨나요?</h1>
+      <span class="estimate">
+        <button id="goHome" type="button" onclick="location.href='/home'">
+          평가 없이 돌아가기
+        </button>
+      </span>
+      <span>
+        <button id="estimate" type="button" onclick="location.href='/estimate'">
+          평가 하기
+        </button>
+      </span>
+    </div>
+  </body>
+</html>

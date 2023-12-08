@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 1rem;
+        text-align: left;
+      }
+      .container {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #fff;
+        margin: auto; /* 변경된 부분 */
+        text-align: center;
+        width: 80vh;
+        max-width: 1000px; /* 변경된 부분 */
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        background-color: #4098e0;
+        color: #ffffff;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 2px;
+      }
+
+      .content {
+        background-color: #ffffff;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 5px;
+        width: 60vh;
+        border: 1px solid #4098e0;
+      }
+
+      .sendBtn {
+        background-color: #4098e0;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      .quit {
+        background-color: #fff;
+        color: #4098e0;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 3px;
+        margin: 10px;
+      }
+
+      .msgArea {
+        border: 1px solid #dddfe2;
+        padding: 10px;
+        margin-top: 10px;
+        height: 200px;
+        overflow-y: scroll;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 th:text="${room.name}"></h1>
+        <button type="button" value="방나가기" class="quit" onclick="quit()">
+          방 나가기
+        </button>
+      </div>
+      <div>
+        <div class="msgArea"></div>
+      </div>
+      <input
+        type="text"
+        placeholder="보낼 메세지를 입력하세요."
+        class="content"
+      />
+      <button type="button" value="전송" class="sendBtn" onclick="sendMsg()">
+        전송
+      </button>
+    </div>
+  </body>
+
+  <script th:inline="javascript">
+        function enterRoom(socket){
+            var enterMsg={"type" : "ENTER","roomId":[[${room.roomId}]],"sender":"chee","msg":""}; //sender는  글쓸때 수정하자.
+            socket.send(JSON.stringify(enterMsg));
+        }
+        let socket = new WebSocket("ws://localhost:8080/ws/chat");
+
+        socket.onopen = function (e) {
+            console.log('open server!')
+            enterRoom(socket);
+        };
+        socket.onclose=function(e){
+            console.log('disconnet');
+        }
+
+        socket.onerror = function (e){
+            console.log(e);
+        }
+
+        //메세지 수신했을 때 이벤트.
+        socket.onmessage = function (e) {
+            console.log(e.data);
+            let msgArea = document.querySelector('.msgArea');
+            let newMsg = document.createElement('div');
+
+            // Convert the message string back to a ChatMessage object
+            let chatMessage = JSON.parse(e.data);
+
+            // Extract 'sender' and 'msg' from the ChatMessage object
+            let formattedMessage = chatMessage.sender + " : " + chatMessage.msg;
+
+            newMsg.innerText = formattedMessage;
+            msgArea.append(newMsg);
+        }
+
+
+        //메세지 보내기 버튼 눌렀을 떄..
+        function sendMsg() {
+            let content=document.querySelector('.content').value;
+            console.log(content);
+            var talkMsg={"type" : "TALK","roomId":[[${room.roomId}]] ,"sender":"chee","msg":content};
+            socket.send(JSON.stringify(talkMsg));
+        }
+
+        function quit() {
+        let roomId = "${room.roomId}";
+        let quitMsg = {"type" : "QUIT", "roomId": [[${room.roomId}]], "sender": "chee", "msg": ""};
+        socket.send(JSON.stringify(quitMsg));
+        fetch('/quit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quitMsg),
+        redirect: 'follow',  // 리다이렉트 응답을 따름
+    })
+    .then(() => {
+        socket.close();
+        location.href = "/chat/temp";
+    });
+        }
+  </script>
+</html>
