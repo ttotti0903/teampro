@@ -58,7 +58,7 @@ public class MemoryArticleRepository implements ArticleRepository{
     public List<Article> SelcetFive() {
         return store.values().stream()
                 .sorted(Comparator.comparing(Article::getDeadline_int))
-                .limit(5)
+                .limit(10)
                 .collect(Collectors.toList());
     }
 }

@@ -56,7 +56,7 @@ public class MemoryClubRepository implements ClubRepository{
     public List<Club> SelcetFive() {
         return store.values().stream()
                 .sorted(Comparator.comparing(Club::getDeadline_int))
-                .limit(5)
+                .limit(10)
                 .collect(Collectors.toList());
     }
 }

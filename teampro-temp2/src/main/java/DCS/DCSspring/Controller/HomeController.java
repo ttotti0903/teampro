@@ -43,6 +43,7 @@ public class HomeController {
                     .filter(room -> Arrays.stream(room.userId)
                             .filter(Objects::nonNull)
                             .anyMatch(id -> Objects.equals(memberService.findOne(id).getMajor(), currentUser.getMajor())))
+                    .limit(10)
                     .collect(Collectors.toList());
 
             model.addAttribute("roomList", roomList);
