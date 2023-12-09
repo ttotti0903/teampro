@@ -1,473 +1,479 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8" />
-  <title>게시물 목록</title>
-  <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-  />
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f0f0f0;
-      margin: 0;
-    }
-    #inform {
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시물 목록</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      #inform {
+        text-align: center;
+      }
 
-    .container {
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      margin: 20px;
-      padding: 20px;
-      min-height: 600px;
-      min-width: 800px;
-    }
+      .container {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px;
+        padding: 20px;
+        min-height: 600px;
+        min-width: 800px;
+      }
 
-    label {
-      display: block;
-      margin-top: 10px;
-    }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
 
-    input[type="text"] {
-      width: 90%;
-      height: 50%;
-      padding: 10px;
-      margin: 5px 0;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-    button {
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    .replyButton {
-      border: none;
-      background-color: #fff;
-      color: #fff;
-    }
-    .replyButton:hover {
-      border: none;
-      background-color: #fff;
-      color: #fff;
-    }
+      input[type="text"] {
+        width: 90%;
+        height: 50%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .replyButton {
+        border: none;
+        background-color: #fff;
+        color: #fff;
+      }
+      .replyButton:hover {
+        border: none;
+        background-color: #fff;
+        color: #fff;
+      }
 
-    #title {
-      float: left;
-      width: 400px;
-      height: 50px;
-      border: 3px solid rgb(64, 152, 224);
-      border-radius: 50px;
-    }
-    #time_button {
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    #search_img {
-      width: 60px;
-      height: 60px;
-    }
-    #search_button {
-      float: left;
-      background: none;
-      border: none;
-      margin-left: 10px;
-      padding-top: 0;
-      margin-top: -3px;
-    }
-    #comment_button {
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      width: 50px;
-      height: 45px;
-    }
+      #title {
+        float: left;
+        width: 400px;
+        height: 50px;
+        border: 3px solid rgb(64, 152, 224);
+        border-radius: 50px;
+      }
+      #time_button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      #search_img {
+        width: 60px;
+        height: 60px;
+      }
+      #search_button {
+        float: left;
+        background: none;
+        border: none;
+        margin-left: 10px;
+        padding-top: 0;
+        margin-top: -3px;
+      }
+      #comment_button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        width: 50px;
+        height: 45px;
+      }
 
-    button {
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+      button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+      button:hover {
+        background-color: #0056b3;
+      }
 
-    table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
 
-    th,
-    td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
 
-    th {
-      background-color: #4098e0;
-      color: #fff;
-    }
+      th {
+        background-color: #4098e0;
+        color: #fff;
+      }
 
-    a {
-      text-decoration: none;
-      color: #4098e0;
-    }
-    .column {
-      display: flex;
-    }
-    /*.title {
-      align-items: center;
-      margin-top: 100px;
-      margin-bottom: 220px;
-      margin-left: 330px;
-    }*/
-    .title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: auto;
-      margin-right: auto;
-      border: none;
-      margin-top: 100px;
-      margin-bottom: 120px;
-    }
+      a {
+        text-decoration: none;
+        color: #4098e0;
+      }
+      .column {
+        display: flex;
+      }
+      /*.title {
+        align-items: center;
+        margin-top: 100px;
+        margin-bottom: 220px;
+        margin-left: 330px;
+      }*/
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        margin-top: 100px;
+        margin-bottom: 120px;
+      }
 
-    .login-button {
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      margin-top: 17px;
-      margin-right: 10px;
-      margin-bottom: -30px;
-    }
-    .login-button:hover {
-      background-color: #0056b3;
-    }
-    nav {
-      display: block;
-      float: right;
-    }
-    /*네비바*/
-    #navi {
-      width: 100%;
-      height: 60px;
-      text-align: center;
-      background-color: rgb(64, 152, 224);
-    }
-    #list_img {
-      width: 50px;
-      height: 50px;
-      float: left;
-      margin-left: 10px;
-      margin-top: 5px;
-    }
-    ul {
-      list-style: none;
-    }
-    #navi > ul {
-      display: inline-block;
-    }
-    #navi > ul > li {
-      float: left;
-      padding-left: 0px;
-      font-size: 30px;
-      margin-top: 7px;
-      font-weight: bold;
-    }
-    .nav_a {
-      color: white;
-      text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
-      -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
-      font-weight: bold;
-      text-decoration: none;
-    }
-    li :hover {
-      color: white;
-      text-decoration: none;
-      border-bottom: 3px solid white;
-    }
-    #write {
-      margin-right: 30px;
-      background-color: #4098e0;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+      .login-button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-top: 17px;
+        margin-right: 10px;
+        margin-bottom: -30px;
+      }
+      .login-button:hover {
+        background-color: #0056b3;
+      }
+      nav {
+        display: block;
+        float: right;
+      }
+      /*네비바*/
+      #navi {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        background-color: rgb(64, 152, 224);
+      }
+      #list_img {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin-left: 10px;
+        margin-top: 5px;
+      }
+      ul {
+        list-style: none;
+      }
+      #navi > ul {
+        display: inline-block;
+      }
+      #navi > ul > li {
+        float: left;
+        padding-left: 0px;
+        font-size: 30px;
+        margin-top: 7px;
+        font-weight: bold;
+      }
+      .nav_a {
+        color: white;
+        text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
+          -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
+        font-weight: bold;
+        text-decoration: none;
+      }
+      li :hover {
+        color: white;
+        text-decoration: none;
+        border-bottom: 3px solid white;
+      }
+      #write {
+        margin-right: 30px;
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      #home {
+        background-color: #4098e0;
+        border: none;
+        cursor: pointer;
+        float: left;
+      }
 
-    .댓글 {
-      display: flex;
-      flex-direction: row; /* 댓글 내용을 가로로 배치합니다. */
-      background-color: #ffffff; /* 댓글 배경색을 하얀색으로 지정합니다. */
-      border: 1px solid #ddd; /* 테두리를 추가합니다. */
-      padding: 10px; /* 내부 여백을 지정합니다. */
-      margin-bottom: 10px; /* 댓글 사이에 간격을 줍니다. */
-    }
+      .댓글 {
+        display: flex;
+        flex-direction: row; /* 댓글 내용을 가로로 배치합니다. */
+        background-color: #ffffff; /* 댓글 배경색을 하얀색으로 지정합니다. */
+        border: 1px solid #ddd; /* 테두리를 추가합니다. */
+        padding: 10px; /* 내부 여백을 지정합니다. */
+        margin-bottom: 10px; /* 댓글 사이에 간격을 줍니다. */
+      }
 
-    /* 대댓글들을 감싸는 div에 스타일을 적용합니다. */
-    .대댓글들 {
-      margin-left: 20px; /* 대댓글을 오른쪽으로 옮깁니다. */
-    }
+      /* 대댓글들을 감싸는 div에 스타일을 적용합니다. */
+      .대댓글들 {
+        margin-left: 20px; /* 대댓글을 오른쪽으로 옮깁니다. */
+      }
 
-    /* 각각의 대댓글에 스타일을 적용합니다. */
-    .대댓글 {
-      display: flex;
-      flex-direction: row; /* 대댓글 내용을 가로로 배치합니다. */
-      background-color: #f9f9f9; /* 대댓글 배경색을 연회색으로 지정합니다. */
-      border: 1px solid #ddd; /* 테두리를 추가합니다. */
-      padding: 8px; /* 내부 여백을 지정합니다. */
-      margin-bottom: 8px; /* 대댓글 사이에 간격을 줍니다. */
-    }
-  </style>
+      /* 각각의 대댓글에 스타일을 적용합니다. */
+      .대댓글 {
+        display: flex;
+        flex-direction: row; /* 대댓글 내용을 가로로 배치합니다. */
+        background-color: #f9f9f9; /* 대댓글 배경색을 연회색으로 지정합니다. */
+        border: 1px solid #ddd; /* 테두리를 추가합니다. */
+        padding: 8px; /* 내부 여백을 지정합니다. */
+        margin-bottom: 8px; /* 대댓글 사이에 간격을 줍니다. */
+      }
+    </style>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const replyButtons = document.querySelectorAll(".replyButton");
-      replyButtons.forEach((replyButton, index) => {
-        replyButton.addEventListener("click", () => {
-          const currentCommentBlock = replyButton.closest(".댓글블럭");
-          const allCommentBlocks = document.querySelectorAll(".댓글블럭");
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const replyButtons = document.querySelectorAll(".replyButton");
+        replyButtons.forEach((replyButton, index) => {
+          replyButton.addEventListener("click", () => {
+            const currentCommentBlock = replyButton.closest(".댓글블럭");
+            const allCommentBlocks = document.querySelectorAll(".댓글블럭");
 
-          // 1. 모든 댓글블럭에 replyArea가 없을 경우 눌린 대댓글 버튼이 있는 댓글 블럭에 replyArea를 추가한다.
-          const isOpen = currentCommentBlock.querySelector(".replyArea");
+            // 1. 모든 댓글블럭에 replyArea가 없을 경우 눌린 대댓글 버튼이 있는 댓글 블럭에 replyArea를 추가한다.
+            const isOpen = currentCommentBlock.querySelector(".replyArea");
 
-          if (!isOpen) {
-            const commentId = replyButton.getAttribute("data-commentid");
-            createReplyRow(currentCommentBlock, commentId);
-          }
-
-          // 2. replyArea가 열여있는 댓글블럭의 대댓글 버튼이 눌릴 경우 replyArea를 삭제한다.
-          allCommentBlocks.forEach((commentBlock) => {
-            if (commentBlock !== currentCommentBlock) {
-              const openReplyArea = commentBlock.querySelector(".replyArea");
-              if (openReplyArea) {
-                openReplyArea.parentElement.removeChild(openReplyArea);
-              }
+            if (!isOpen) {
+              const commentId = replyButton.getAttribute("data-commentid");
+              createReplyRow(currentCommentBlock, commentId);
             }
+
+            // 2. replyArea가 열여있는 댓글블럭의 대댓글 버튼이 눌릴 경우 replyArea를 삭제한다.
+            allCommentBlocks.forEach((commentBlock) => {
+              if (commentBlock !== currentCommentBlock) {
+                const openReplyArea = commentBlock.querySelector(".replyArea");
+                if (openReplyArea) {
+                  openReplyArea.parentElement.removeChild(openReplyArea);
+                }
+              }
+            });
           });
         });
+
+        function createReplyRow(commentIndex, commentId) {
+          const replyText = document.createElement("input");
+          replyText.type = "text";
+          replyText.className = "replyText";
+          replyText.placeholder = "대댓글 입력";
+
+          const sendReply = document.createElement("button");
+          sendReply.className = "sendReply";
+          sendReply.textContent = "등록";
+          sendReply.style.marginLeft = "10px";
+
+          const replyArea = document.createElement("div");
+          replyArea.className = "replyArea";
+
+          replyArea.appendChild(replyText);
+          replyArea.appendChild(sendReply);
+
+          commentIndex.appendChild(replyArea);
+
+          sendReply.addEventListener("click", (event) => {
+            const formData = new URLSearchParams();
+            formData.append("content", replyText.value);
+            formData.append("commentId", "" + commentId);
+
+            fetch("/add_reply", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: formData,
+            })
+              .then((response) => response.text())
+              .then((data) => {
+                console.log("컨트롤러 응답:", data);
+              })
+              .catch((error) => {
+                console.error("컨트롤러 호출 중 오류 발생:", error);
+              });
+            location.reload();
+          });
+        }
       });
-
-      function createReplyRow(commentIndex, commentId) {
-        const replyText = document.createElement("input");
-        replyText.type = "text";
-        replyText.className = "replyText";
-        replyText.placeholder = "대댓글 입력";
-
-        const sendReply = document.createElement("button");
-        sendReply.className = "sendReply";
-        sendReply.textContent = "등록";
-        sendReply.style.marginLeft = "10px";
-
-        const replyArea = document.createElement("div");
-        replyArea.className = "replyArea";
-
-        replyArea.appendChild(replyText);
-        replyArea.appendChild(sendReply);
-
-        commentIndex.appendChild(replyArea);
-
-        sendReply.addEventListener("click", (event) => {
-          const formData = new URLSearchParams();
-          formData.append("content", replyText.value);
-          formData.append("commentId", "" + commentId);
-
-          fetch("/add_reply", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: formData,
-          })
-                  .then((response) => response.text())
-                  .then((data) => {
-                    console.log("컨트롤러 응답:", data);
-                  })
-                  .catch((error) => {
-                    console.error("컨트롤러 호출 중 오류 발생:", error);
-                  });
-          location.reload();
-        });
-      }
-    });
-  </script>
-</head>
-<body>
-<div class="container">
-  <nav>
-    <div class="login">
-      <button
-              class="login-button"
-              type="button"
-              onclick="location.href='/login'"
-      >
-        로그인
-      </button>
-    </div>
-  </nav>
-
-  <div id="navi">
-    <div id="dropdown_div">
-      <img id="list_img" src="../../static/img/3l.png" />
-    </div>
-
-    <ul id="nav_ul">
-      <li><a class="nav_a" href="/clubList">동아리</a></li>
-      <li style="padding-left: 60px">
-        <a class="nav_a" href="/articleList">Q&A</a>
-      </li>
-      <li style="padding-left: 60px">
-        <a class="nav_a" href="/chatlist">스터디</a>
-      </li>
-      <li style="padding-left: 60px">
-        <a class="nav_a" href="/temp">더미회원</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="title">
-    <button id="write" type="button" onclick="location.href='/new'">
-      게시글 쓰기
-    </button>
-    <form action="articleSearch" method="post">
-      <!--<label id="inform">검색할 게시물의 제목</label>-->
-      <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="검색어 입력"
-              required
-      />
-      <button id="search_button">
-        <img id="search_img" src="../../static/img/search.png" />
-      </button>
-    </form>
-  </div>
-
-  <table>
-    <thead>
-    <tr>
-      <th>번호</th>
-      <th>제목</th>
-      <th>내용</th>
-      <th>종료일자</th>
-      <th>종료시각</th>
-      <th>삭제</th>
-    </tr>
-    </thead>
-    <tbody>
-    <form action="deadLine_nearer" method="post">
-      <button id="time_button">마감 시간 순</button>
-    </form>
-    <div class="column">
-      <tr th:if="${article.isPresent()}" th:each="article : ${article}">
-        <td th:text="${article.get().getarticleId()}" width="50px">
-          Default Id
-        </td>
-        <td>
-          <a
-                  th:href="@{'/articles/' + ${article.get().getarticleId()}}"
-                  th:text="${article.get().getTitle()}"
-          >Default Title</a
-          >
-        </td>
-        <td th:text="${article.get().getContent()}">Default Content</td>
-        <td
-                th:text="${#temporals.format(article.get().getDate(), 'yyyy-MM-dd')}"
-                width="200px"
-        >
-          Default Date
-        </td>
-        <td
-                th:text="${#temporals.format(article.get().getTime(), 'HH:mm')}"
-                width="80px"
-        >
-          Default Time
-        </td>
-        <td width="80px">
-          <a
-                  th:href="@{/articles/{id}/delete(id=${article.get().getarticleId()})}"
-                  class="btn-primary"
-          ><button>Delete</button></a
-          >
-        </td>
-      </tr>
-    </div>
-    </tbody>
-  </table>
-
-  <section>
-    <fieldset>댓글영역</fieldset>
-    <div
-            class="댓글창"
-            th:each="comment, commentIndex: ${article.get().getComments()}"
-    >
-      <div class="댓글블럭" th:id="'comment_' + ${commentIndex.index}">
-        <div class="댓글">
-          <p th:text="${comment.getAuther()} +  ' : '"></p>
-          <p th:text="${comment.content}"></p>
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="login">
           <button
-                  class="replyButton"
-                  th:id="'replyButton_' + ${commentIndex.index}"
-                  th:attr="data-commentid=${comment.commentid}"
+            class="login-button"
+            type="button"
+            onclick="location.href='/login'"
           >
-            <img id="comment_img" src="/img/comment.svg" />
+            로그인
           </button>
         </div>
+      </nav>
+
+      <div id="navi">
+        <button id="home" onclick="location.href='/'">
+          <img id="list_img" src="/img/3l.svg" />
+        </button>
+
+        <ul id="nav_ul">
+          <li><a class="nav_a" href="/clubList">동아리</a></li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/articleList">Q&A</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/chatlist">스터디</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/temp">더미회원</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="title">
+        <button id="write" type="button" onclick="location.href='/new'">
+          게시글 쓰기
+        </button>
+        <form action="articleSearch" method="post">
+          <!--<label id="inform">검색할 게시물의 제목</label>-->
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="검색어 입력"
+            required
+          />
+          <button id="search_button">
+            <img id="search_img" src="img/search.png" />
+          </button>
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>종료일자</th>
+            <th>종료시각</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <form action="deadLine_nearer" method="post">
+            <button id="time_button">마감 시간 순</button>
+          </form>
+          <div class="column">
+            <tr th:if="${article.isPresent()}" th:each="article : ${article}">
+              <td th:text="${article.get().getarticleId()}" width="50px">
+                Default Id
+              </td>
+              <td>
+                <a
+                  th:href="@{'/articles/' + ${article.get().getarticleId()}}"
+                  th:text="${article.get().getTitle()}"
+                  >Default Title</a
+                >
+              </td>
+              <td th:text="${article.get().getContent()}">Default Content</td>
+              <td
+                th:text="${#temporals.format(article.get().getDate(), 'yyyy-MM-dd')}"
+                width="200px"
+              >
+                Default Date
+              </td>
+              <td
+                th:text="${#temporals.format(article.get().getTime(), 'HH:mm')}"
+                width="80px"
+              >
+                Default Time
+              </td>
+              <td width="80px">
+                <a
+                  th:href="@{/articles/{id}/delete(id=${article.get().getarticleId()})}"
+                  class="btn-primary"
+                  ><button>Delete</button></a
+                >
+              </td>
+            </tr>
+          </div>
+        </tbody>
+      </table>
+
+      <section>
+        <fieldset>댓글영역</fieldset>
         <div
-                class="대댓글들"
-                th:each="reply, replyIndex: ${comment.getReplyList()}"
-                th:id="'reply_' + ${replyIndex.index}"
+          class="댓글창"
+          th:each="comment, commentIndex: ${article.get().getComments()}"
         >
-          <div class="대댓글">
-            <p th:text="${reply.getAuther().getName()} + ' : '"></p>
-            <p th:text="${reply.getContent()}"></p>
+          <div class="댓글블럭" th:id="'comment_' + ${commentIndex.index}">
+            <div class="댓글">
+              <p th:text="${comment.getAuther()} +  ' : '"></p>
+              <p th:text="${comment.content}"></p>
+              <button
+                class="replyButton"
+                th:id="'replyButton_' + ${commentIndex.index}"
+                th:attr="data-commentid=${comment.commentid}"
+              >
+                <img id="comment_img" src="/img/comment.svg" />
+              </button>
+            </div>
+            <div
+              class="대댓글들"
+              th:each="reply, replyIndex: ${comment.getReplyList()}"
+              th:id="'reply_' + ${replyIndex.index}"
+            >
+              <div class="대댓글">
+                <p th:text="${reply.getAuther().getName()} + ' : '"></p>
+                <p th:text="${reply.getContent()}"></p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+      <form action="/add_comment" method="post">
+        <label for="content">댓글</label>
+        <input type="text" id="content" name="content" required />
+
+        <!-- 게시물 번호를 hidden으로 전달 -->
+        <input
+          type="hidden"
+          id="articleId"
+          name="articleId"
+          th:value="${article.get().getarticleId()}"
+        />
+
+        <button id="comment_button" type="submit">등록</button>
+      </form>
     </div>
-  </section>
-  <form action="/add_comment" method="post">
-    <label for="content">댓글</label>
-    <input type="text" id="content" name="content" required />
-
-    <!-- 게시물 번호를 hidden으로 전달 -->
-    <input
-            type="hidden"
-            id="articleId"
-            name="articleId"
-            th:value="${article.get().getarticleId()}"
-    />
-
-    <button id="comment_button" type="submit">등록</button>
-  </form>
-</div>
-<!-- /container -->
-<hr />
-<a href="/" class="footer">홈 화면</a>
-<br />
-<a href="/articleList" class="footer">게시물 목록</a>
-</body>
+    <!-- /container -->
+    <hr />
+    <a href="/" class="footer">홈 화면</a>
+    <br />
+    <a href="/articleList" class="footer">게시물 목록</a>
+  </body>
 </html>
