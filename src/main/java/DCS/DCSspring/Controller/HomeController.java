@@ -25,7 +25,8 @@ public class HomeController {
     private final ClubService clubService;
     private final RatingService ratingService;
     private final MemberService memberService;
-    @RequestMapping ({"home" , "/"})
+    @PostMapping
+    @GetMapping ({"home" , "/"})
     public String hello(Model model, HttpServletRequest request) {
         List<Article> articles = articleService.SelcetFive();
         List<Club> clubs = clubService.SelcetFive();
