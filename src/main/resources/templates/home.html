@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>명지 동까스</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      tr,
+      td {
+        border-bottom: 1px solid lightgray;
+      }
+      td a {
+        text-decoration: none;
+        color: black;
+        font-weight: lighter;
+      }
+      #honor tr,
+      td {
+        border-bottom: 1px solid lightgray;
+        padding-top: 4.6px;
+        padding-bottom: 4.6px;
+        font-size: 16px;
+      }
+      #wrap {
+        margin: 0 auto;
+        width: 1200px;
+      }
+      /*하이퍼 링크*/
+      #join_a {
+        text-decoration: none;
+        color: rgb(104, 104, 104);
+        font-weight: lighter;
+      }
+      li :hover {
+        border-bottom: 3px solid white;
+      }
+      .nav_a {
+        color: white;
+        text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
+          -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .contain_a {
+        color: white;
+        text-decoration: none;
+      }
+      .side_a {
+        color: white;
+        text-decoration: none;
+      }
+
+      #sidebar h1 {
+        margin-top: 50px;
+        padding-left: 10px;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        border-left: 5px solid rgb(64, 152, 224);
+        /*-webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: rgb(64, 152, 224);*/
+        text-shadow: 1.5px 0px rgb(64, 152, 224), 0px 1.5px rgb(64, 152, 224),
+          -1.5px 0px rgb(64, 152, 224), 0px -1.5px rgb(64, 152, 224);
+        margin-bottom: -43px;
+        margin-left: 50px;
+      }
+      #bottom {
+        margin: auto;
+        width: 100%;
+        height: 170px;
+        background-color: rgb(64, 152, 224);
+        margin-top: 1300px;
+      }
+
+      header {
+        display: inline-block;
+        width: 100%;
+        height: 200px;
+
+        /*background-color: green;*/
+      }
+      #logo {
+        float: left;
+        width: 200px;
+        height: 200px;
+        padding-top: 20px;
+      }
+      #logo h1 {
+        margin: 70px 0;
+      }
+      nav {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        border-bottom: 1.5px solid rgb(175, 164, 164);
+        background-color: rgb(64, 152, 224);
+
+        /*box-shadow: 0 5px 5px -5px  rgb(175, 164, 164);*/
+      }
+      /*드롭다운*/
+      #list_img {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin-left: 10px;
+        margin-top: 5px;
+      }
+
+      ul {
+        list-style: none;
+      }
+      nav > ul {
+        display: inline-block;
+      }
+      nav > ul > li {
+        float: left;
+        padding-left: 0px;
+        font-size: 30px;
+        margin-top: 7px;
+        font-weight: bold;
+      }
+
+      /*서치바*/
+      #search {
+        float: left;
+        margin-left: 230px;
+        margin-top: 80px;
+      }
+      ::placeholder {
+        padding: 10px;
+      }
+      #search_box {
+        width: 400px;
+        height: 50px;
+        border: 3px solid rgb(64, 152, 224);
+        border-radius: 50px;
+        float: left;
+      }
+
+      #search_button {
+        float: left;
+        background: none;
+        border: none;
+        margin-left: 10px;
+        padding-top: 0;
+        margin-top: -8px;
+      }
+      #search_img {
+        width: 60px;
+        height: 60px;
+      }
+
+      /*게시판*/
+      #container {
+        float: left;
+        width: 800px;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+        font-weight: lighter;
+      }
+      #dongari,
+      #cafestudy,
+      #study {
+        border: 1.5px solid rgb(175, 164, 164);
+        border-radius: 5px;
+        margin: 5px 20px 20px 0;
+        height: 300px;
+        box-shadow: 0px 0px 10px rgb(198, 198, 198);
+      }
+      table {
+        text-align: center;
+        width: 100%;
+        /*padding: 10px;*/
+        /*border-bottom: 1.5px solid rgb(175, 164, 164);*/
+        border-collapse: collapse;
+      }
+      #container h1 {
+        margin-top: 50px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        border-left: 5px solid rgb(64, 152, 224);
+        /*-webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: rgb(64, 152, 224);*/
+        text-shadow: 1.5px 0px rgb(64, 152, 224), 0px 1.5px rgb(64, 152, 224),
+          -1.5px 0px rgb(64, 152, 224), 0px -1.5px rgb(64, 152, 224);
+      }
+      #sidebar {
+        float: left;
+        width: 400px;
+        height: 1000px;
+
+        /*background-color: orange;*/
+      }
+      #login {
+        width: 350px;
+        height: 150px;
+        border: 1.5px solid rgb(175, 164, 164);
+        border-radius: 5px;
+        margin-top: 95px;
+        box-shadow: 0px 0px 10px rgb(198, 198, 198);
+        margin-left: 50px;
+      }
+      #login_button {
+        font-size: 20px;
+        width: 250px;
+        height: 50px;
+        margin: 40px 50px 5px 50px;
+        border: none;
+        border-radius: 7px;
+        background-color: rgb(64, 152, 224);
+        color: white;
+        font-weight: bold;
+      }
+      #member_join {
+        text-align: center;
+        margin: 0;
+        font-size: 15px;
+      }
+
+      #honor {
+        margin: 60px 0;
+        border: 1.5px solid rgb(175, 164, 164);
+        border-radius: 5px;
+        width: 350px;
+        height: 300px;
+        box-shadow: 0px 0px 10px rgb(198, 198, 198);
+        margin-left: 50px;
+      }
+      #chat_room {
+        margin: 60px 0;
+        border: 1.5px solid rgb(175, 164, 164);
+        border-radius: 5px;
+        width: 350px;
+        height: 300px;
+        box-shadow: 0px 0px 10px rgb(198, 198, 198);
+        margin-left: 50px;
+      }
+      #home {
+        background-color: #4098e0;
+        border: none;
+        cursor: pointer;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="top"></div>
+    <div id="wrap">
+      <header>
+        <div id="logo">
+          <!--<h1>명지 동까스</h1>-->
+          <a href="home.html">
+            <img src="/img/logo2.png" />
+          </a>
+        </div>
+        <div id="search">
+          <form action="articleSearch" method="post">
+            <input id="search_box" type="text" placeholder="검색어 입력" />
+            <button id="search_button" type="submit">
+              <img id="search_img" src="/img/search.png" />
+            </button>
+          </form>
+        </div>
+      </header>
+
+      <nav>
+        <button id="home" onclick="location.href='/'">
+          <img id="list_img" src="/img/3l.svg" />
+        </button>
+        <!--
+        <div id="dropdown_div">
+          <img id="list_img" src="/img/3l.png" />
+          <!--
+            <div id = "dropdown_menu">
+                <ul>
+                    <li><a href="#">명예의 전당</a></li>
+                    <li><a href="#">채팅방</a></li>
+                    <li><a href="#">회원 목록</a></li>
+                </ul>
+            </div>
+        </div>-->
+
+        <ul id="nav_ul">
+          <li><a class="nav_a" href="/clubList">동아리</a></li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/articleList">Q&A</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/chatlist">스터디</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/temp">더미회원</a>
+          </li>
+        </ul>
+      </nav>
+      <div id="container">
+        <h1><a class="contain_a" href="/clubList">동아리</a></h1>
+        <div id="dongari">
+          <table>
+            <tr th:each="club : ${clubs}" style="cursor: pointer">
+              <td width="400px">
+                <a
+                  th:href="@{/club/{id}(id=${club.getClubid()})}"
+                  th:text="${club.title}"
+                ></a>
+              </td>
+              <td width="300px">
+                <a
+                  th:href="@{/club/{id}(id=${club.getClubid()})}"
+                  th:text="${club.remainingTime}"
+                ></a>
+              </td>
+              <td width="100px">
+                <a
+                  th:href="@{/club/{id}(id=${club.getClubid()})}"
+                  th:text="${club.getAuthor().getName()}"
+                ></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <h1><a class="contain_a" href="/articleList">Q&A</a></h1>
+        <div id="cafestudy">
+          <table>
+            <tr th:each="article : ${articles}" style="cursor: pointer">
+              <td width="400px">
+                <a
+                  th:href="@{/articles/{id}(id=${article.getarticleId()})}"
+                  th:text="${article.title}"
+                ></a>
+              </td>
+              <td width="300px">
+                <a
+                  th:href="@{/articles/{id}(id=${article.getarticleId()})}"
+                  th:text="${article.remainingTime}"
+                ></a>
+              </td>
+              <td witdh="100px">
+                <a
+                  th:href="@{/articles/{id}(id=${article.getarticleId()})}"
+                  th:text="${article.getAuthor().getName()}"
+                ></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <h1><a class="contain_a" href="/chatlist">스터디</a></h1>
+        <div id="study">
+          <table>
+            <tr th:each="room : ${roomList}" style="cursor: pointer">
+              <td width="400px">
+                <a
+                  th:href="@{/chatRoom/{roomId}(roomId=${room.roomId})}"
+                  th:text="${room.name}"
+                ></a>
+              </td>
+              <td width="200px" style="text-align: right">
+                <a
+                  th:href="@{/chatRoom/{roomId}(roomId=${room.roomId})}"
+                  th:text="${room.userNum}"
+                ></a>
+                /
+              </td>
+              <td width="200px" style="text-align: left">
+                <a
+                  th:href="@{/chatRoom/{roomId}(roomId=${room.roomId})}"
+                  th:text="${room.maxUser}"
+                ></a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="sidebar">
+        <div id="login">
+          <button
+            id="login_button"
+            type="button"
+            onclick="location.href='/login'"
+          >
+            로그인/회원가입
+          </button>
+        </div>
+
+        <h1><a class="side_a" href="/members">명예의 전당</a></h1>
+        <a href="/members">
+          <div id="honor">
+            <table>
+              <tr th:each="rating : ${rating}">
+                <td th:text="${rating.member.name}"></td>
+                <td th:text="${rating.score_avg}"></td>
+                <td th:text="${rating.score_num}"></td>
+              </tr>
+            </table>
+          </div>
+        </a>
+        <h1><a class="side_a" href="">채팅방</a></h1>
+        <a href="#">
+          <div id="chat_room"></div>
+        </a>
+      </div>
+      <footer></footer>
+    </div>
+
+    <div id="bottom"></div>
+  </body>
+  <script>
+    window.onload = function () {
+      var rows = document.querySelectorAll("table tr");
+      rows.forEach(function (row) {
+        row.addEventListener("mouseover", function () {
+          this.style.backgroundColor = "lightgray";
+        });
+        row.addEventListener("mouseout", function () {
+          this.style.backgroundColor = "";
+        });
+      });
+    };
+  </script>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시물 목록</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      #inform {
+        text-align: center;
+      }
+
+      .container {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px;
+        padding: 20px;
+        min-height: 600px;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input[type="text"] {
+        float: left;
+        width: 400px;
+        height: 50px;
+        border: 3px solid rgb(64, 152, 224);
+        border-radius: 50px;
+      }
+
+      #time_button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      #search_img {
+        width: 60px;
+        height: 60px;
+      }
+      #search_button {
+        float: left;
+        background: none;
+        border: none;
+        margin-left: 10px;
+        padding-top: 0;
+        margin-top: -8px;
+      }
+
+      button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #4098e0;
+        color: #fff;
+      }
+
+      a {
+        text-decoration: none;
+        color: #4098e0;
+      }
+      .column {
+        display: flex;
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        margin-top: 100px;
+        margin-bottom: 120px;
+      }
+
+      .login-button {
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-top: 17px;
+        margin-right: 10px;
+        margin-bottom: -30px;
+      }
+      .login-button:hover {
+        background-color: #0056b3;
+      }
+      nav {
+        display: block;
+        float: right;
+      }
+      form {
+        display: inline-block;
+      }
+      #reject {
+        background-color: #fff;
+        color: #4098e0;
+        border: 1px solid #4098e0;
+      }
+      #write {
+        margin-right: 30px;
+        background-color: #4098e0;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      /*네비바*/
+      #navi {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        background-color: rgb(64, 152, 224);
+      }
+      #list_img {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin-left: 10px;
+        margin-top: 5px;
+      }
+      ul {
+        list-style: none;
+      }
+      #navi > ul {
+        display: inline-block;
+      }
+      #navi > ul > li {
+        float: left;
+        padding-left: 0px;
+        font-size: 30px;
+        margin-top: 7px;
+        font-weight: bold;
+      }
+      .nav_a {
+        color: white;
+        text-shadow: 2px 0px rgb(32, 120, 192), 0px 2px rgb(32, 120, 192),
+          -2px 0px rgb(32, 120, 192), 0px -2px rgb(32, 120, 192);
+      }
+      li :hover {
+        color: white;
+        text-decoration: none;
+        border-bottom: 3px solid white;
+      }
+      #home {
+        background-color: #4098e0;
+        border: none;
+        cursor: pointer;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="login">
+          <button
+            class="login-button"
+            type="button"
+            onclick="location.href='/login'"
+          >
+            로그인
+          </button>
+        </div>
+      </nav>
+      <div id="navi">
+        <button id="home" onclick="location.href='/'">
+          <img id="list_img" src="/img/3l.svg" />
+        </button>
+        <ul id="nav_ul">
+          <li><a class="nav_a" href="/clubList">동아리</a></li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/articleList">Q&A</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/chatlist">스터디</a>
+          </li>
+          <li style="padding-left: 60px">
+            <a class="nav_a" href="/temp">더미회원</a>
+          </li>
+        </ul>
+      </div>
+      <div class="title">
+        <button id="write" type="button" onclick="location.href='/new'">
+          게시글 쓰기
+        </button>
+        <form action="clubSearch" method="post">
+          <!--<label id="inform">검색할 게시물의 제목</label>-->
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="검색어 입력"
+            required
+          />
+          <button id="search_button">
+            <img id="search_img" src="/img/search.png" />
+          </button>
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>종료일자</th>
+            <th>종료시각</th>
+            <th>삭제</th>
+            <th>모집현황</th>
+          </tr>
+        </thead>
+        <tbody>
+          <form action="deadLine_nearer" method="post">
+            <button id="time_button">마감 시간 순</button>
+          </form>
+          <div class="column">
+            <tr th:if="${club.isPresent()}" th:each="club : ${club}">
+              <td th:text="${club.get().getClubid()}" width="50px">
+                Default Id
+              </td>
+              <td>
+                <a
+                  th:href="@{'/club/' + ${club.get().getClubid()}}"
+                  th:text="${club.get().getTitle()}"
+                  >Default Title</a
+                >
+              </td>
+              <td th:text="${club.get().getContent()}">Default Content</td>
+              <td
+                th:text="${#temporals.format(club.get().getDate(), 'yyyy-MM-dd')}"
+                width="200px"
+              >
+                Default Date
+              </td>
+              <td
+                th:text="${#temporals.format(club.get().getTime(), 'HH:mm')}"
+                width="80px"
+              >
+                Default Time
+              </td>
+              <td width="80px">
+                <a
+                  th:href="@{/club/{id}/delete(id=${club.get().getClubid()})}"
+                  class="btn-primary"
+                  ><button>Delete</button></a
+                >
+              </td>
+              <td
+                th:text="${club.get().getCurrent_confirm()} + '/' + ${club.get().getMax_recruit()}"
+              ></td>
+            </tr>
+            <tr></tr>
+          </div>
+        </tbody>
+      </table>
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+
+      <div th:if="${isAuthor}">
+        <p>작성자일 경우 보이는 부분</p>
+        <table>
+          <thead>
+            <tr>
+              <th>신청자</th>
+              <th>이메일</th>
+              <th>학과</th>
+              <th>학년</th>
+              <th>수락/거절</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="applicant : ${applicants}">
+              <td>
+                <a th:text="${applicant.getName()}"></a>
+              </td>
+              <td>
+                <span th:text="${applicant.getEmail()}"></span>
+              </td>
+              <td>
+                <span th:text="${applicant.getMajor()}"></span>
+              </td>
+              <td>
+                <span th:text="${applicant.getGrade()}"></span>
+              </td>
+              <td>
+                <form action="/accept" method="post">
+                  <input
+                    type="hidden"
+                    id="member"
+                    name="memberid"
+                    th:value="${applicant.getId()}"
+                  />
+                  <input
+                    type="hidden"
+                    id="clubid_"
+                    name="clubid"
+                    th:value="${club.get().getClubid()}"
+                  />
+                  <button id="accept">수락</button>
+                </form>
+                <form action="/reject" method="post">
+                  <input
+                    type="hidden"
+                    id="member_"
+                    name="memberid"
+                    th:value="${applicant.getId()}"
+                  />
+                  <input
+                    type="hidden"
+                    id="clubid__"
+                    name="clubid"
+                    th:value="${club.get().getClubid()}"
+                  />
+                  <button id="reject">거절</button>
+                </form>
+              </td>
+            </tr>
+            <tr th:each="accept : ${accepts}">
+              <td>
+                <a th:text="${accept.getName()}"></a>
+              </td>
+              <td>
+                <span th:text="${accept.getEmail()}"></span>
+              </td>
+              <td>
+                <span th:text="${accept.getMajor()}"></span>
+              </td>
+              <td>
+                <span th:text="${accept.getGrade()}"></span>
+              </td>
+              <td>
+                <p>가입완료</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div th:unless="${isAuthor}">
+        <p>작성자가 아닐 경우 보이는 부분</p>
+        <div th:unless="${isApplied}">
+          <form action="/user_applied" method="post">
+            <input
+              type="hidden"
+              id="clubid"
+              name="clubid"
+              th:value="${club.get().getClubid()}"
+            />
+            <button id="appli">신청</button>
+          </form>
+        </div>
+        <div th:if="${isApplied}">
+          <p>이미 신청되었습니다.</p>
+        </div>
+      </div>
+    </div>
+    <!-- /container -->
+    <hr />
+    <a href="/" class="footer">홈 화면</a>
+    <br />
+    <a href="/clubList" class="footer">게시물 목록</a>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>멤버 목록</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        margin: auto;
+        width: 50%;
+        margin-top: 100px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        min-height: 500px;
+      }
+      h1,
+      h2 {
+        text-align: center;
+        color: #4098e0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      table {
+        border: 2px solid #4098e0;
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #000;
+      }
+      th {
+        background-color: #4098e0;
+        color: #fff;
+        border: 2px solid #4098e0;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #000;
+      }
+      td {
+        border: 2px solid #4098e0;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <h1>회원 목록</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>이메일</th>
+              <th>전공</th>
+              <th>학년</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="member : ${members}">
+              <td th:text="${member.name}"></td>
+              <td th:text="${member.email}"></td>
+              <td th:text="${member.major}"></td>
+              <td th:text="${member.grade}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <h2>명예의전당 등수 테스트</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>아이디</th>
+              <th>평균평점</th>
+              <th>평가개수</th>
+              <th>스터디횟수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="rating : ${ratings}">
+              <td th:text="${rating.member.name}"></td>
+              <td th:text="${rating.member_id}"></td>
+              <td th:text="${rating.score_avg}"></td>
+              <td th:text="${rating.score_num}"></td>
+              <td th:text="${rating.study_num}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /container -->
+  </body>
+</html>
