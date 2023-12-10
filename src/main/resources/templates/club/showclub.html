@@ -247,7 +247,6 @@
             <th>내용</th>
             <th>종료일자</th>
             <th>종료시각</th>
-            <th>삭제</th>
             <th>모집현황</th>
           </tr>
         </thead>
@@ -279,13 +278,6 @@
                 width="80px"
               >
                 Default Time
-              </td>
-              <td width="80px">
-                <a
-                  th:href="@{/club/{id}/delete(id=${club.get().getClubid()})}"
-                  class="btn-primary"
-                  ><button>Delete</button></a
-                >
               </td>
               <td
                 th:text="${club.get().getCurrent_confirm()} + '/' + ${club.get().getMax_recruit()}"
