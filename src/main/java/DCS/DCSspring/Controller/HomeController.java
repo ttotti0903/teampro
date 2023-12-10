@@ -51,7 +51,7 @@ public class HomeController {
         model.addAttribute("articles", articles);
         model.addAttribute("clubs", clubs);
         model.addAttribute("rating",rating);
-        return "/home";
+        return "home";
     }
 
     @GetMapping ({"home" , "/"})
@@ -80,6 +80,6 @@ public class HomeController {
         model.addAttribute("articles", articles);
         model.addAttribute("clubs", clubs);
         model.addAttribute("rating",rating);
-        return "/home";
+        return "home";
     }
 }
