@@ -147,6 +147,8 @@ public class ClubController {
 
         Member member = memberService.findOne(memberId);
         Optional<Club> club = clubService.findClubById(clubId);
+        if(club.get().getMax_recruit() == club.get().getCurrent_confirm())
+            return "redirect:/club/" + String.valueOf(clubId);
         club.get().Confirm(member);
         return "redirect:/club/" + String.valueOf(clubId);
     }
