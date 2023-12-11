@@ -266,7 +266,11 @@
         </div>
         <div id="search">
           <form action="articleSearch" method="post">
-            <input id="search_box" type="text" placeholder="검색어 입력" />
+            <input id="search_box"
+                   type="text"
+                   name="title"
+                   placeholder=" 검색어 입력"
+                   required/>
             <button id="search_button" type="submit">
               <img id="search_img" src="/img/search.png" />
             </button>
@@ -281,7 +285,7 @@
         <!--
         <div id="dropdown_div">
           <img id="list_img" src="/img/3l.png" />
-          <!--
+          <!-
             <div id = "dropdown_menu">
                 <ul>
                     <li><a href="#">명예의 전당</a></li>
