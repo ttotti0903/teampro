@@ -132,7 +132,7 @@ public class ArticleController {
         System.out.println("mapping "+title);
         List<Article> articles = articleService.findArticleByTitle(title);
         model.addAttribute("articles", articles);
-        return "articles/search";
+        return "articles/Search";
     }
 
     @PostMapping(value = "deadLine_nearer")
